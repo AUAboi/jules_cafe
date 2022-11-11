@@ -8,10 +8,13 @@ use Inertia\Inertia;
 
 class DishController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        $dishes = Dish::all();
+        $filters = $request->all('search');
+        $dishes = Dish::orderBy("name")
+            ->filter($filters)
+            ->paginate(9)
+            ->withQueryString();
 
         return Inertia::render(
             "Admin/Dish/Index",

@@ -1,7 +1,7 @@
 <script setup>
 import { Head } from '@inertiajs/inertia-vue3';
 
-import PageTitle from '@/Components/PageTitle.vue'
+import PageTitle from '@/Components/UI/PageTitle.vue'
 
 </script>
 

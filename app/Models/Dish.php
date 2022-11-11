@@ -26,4 +26,11 @@ class Dish extends Model
             set: fn ($price) => $price * 100,
         );
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+    }
 }

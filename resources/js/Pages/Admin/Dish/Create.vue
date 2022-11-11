@@ -1,5 +1,5 @@
 <script setup>
-import PageTitle from '@/Components/PageTitle.vue';
+import PageTitle from '@/Components/UI/PageTitle.vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import FormInputText from '@/Components/form/FormInputText.vue'
 
