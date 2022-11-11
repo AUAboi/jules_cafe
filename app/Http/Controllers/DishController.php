@@ -12,6 +12,7 @@ class DishController extends Controller
     {
 
         $dishes = Dish::all();
+
         return Inertia::render(
             "Admin/Dish/Index",
             [
@@ -22,7 +23,6 @@ class DishController extends Controller
 
     public function create()
     {
-
-        Inertia::render('Admin/Dish/Create');
+        return Inertia::render('Admin/Dish/Create');
     }
 }
