@@ -18,10 +18,10 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Public/Home');
-});
+})->name('home');
 
 
-Route::prefix('/admin')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
@@ -29,6 +29,7 @@ Route::prefix('/admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/dish', [DishController::class, 'index'])->name('admin.dish');
 
     Route::get('/dish/create', [DishController::class, 'create'])->name('admin.dish.create');
+    Route::post('/dish/create', [DishController::class, 'store'])->name('admin.dish.store');
 });
 
 

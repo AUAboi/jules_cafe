@@ -28,4 +28,8 @@ class DishController extends Controller
     {
         return Inertia::render('Admin/Dish/Create');
     }
+
+    public function store()
+    {
+    }
 }

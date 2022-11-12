@@ -28,7 +28,7 @@ onMounted(() => {
 	<div class="pr-6 pb-8 w-full lg:w-1/2" :class="$attrs.class">
 		<label v-if="label" class="form-label">{{ label }}:</label>
 		<input v-bind="{ ...$attrs, class: null }"
-			class="p-2 leading-normal block w-full border text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus: border-indigo-400 focus:ring"
+			class="p-2 leading-normal block w-full border text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus: border-gray-400 focus:ring"
 			:class="{ 'focus:ring focus:ring-red-200': error }" :type="type" :value="modelValue"
 			@input="$emit('update:modelValue', $event.target.value)" ref="input" />
 		<div v-if="error" class="form-error">{{ error }}</div>
