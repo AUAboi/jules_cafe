@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dishes', function (Blueprint $table) {
+        Schema::create('category_media', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->bigInteger('price');
-            $table->boolean('active')->default(true);
+            $table->foreignId('category_id');
+            $table->foreignId('media_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dishes');
+        Schema::dropIfExists('category_media');
     }
 };

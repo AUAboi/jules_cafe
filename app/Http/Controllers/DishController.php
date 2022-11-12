@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dish;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DishController extends Controller
@@ -29,7 +30,14 @@ class DishController extends Controller
         return Inertia::render('Admin/Dish/Create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $dish = DB::transaction(function () use ($request) {
+            return Dish::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'is_active' => $request->is_active
+            ]);
+        });
     }
 }
