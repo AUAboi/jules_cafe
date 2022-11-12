@@ -32,11 +32,21 @@ class DishController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'string|required',
+            'price' => 'integer|required|min:1',
+            'image' => 'file|max:8000|mimetypes:image/jpg,image/jpeg,image/png',
+            'active' => 'boolean'
+        ]);
+
+
+
         $dish = DB::transaction(function () use ($request) {
             return Dish::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'is_active' => $request->is_active
+                'is_active' => $request->active
             ]);
         });
     }

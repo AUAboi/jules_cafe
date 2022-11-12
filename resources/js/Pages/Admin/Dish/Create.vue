@@ -4,15 +4,20 @@ import { Head, useForm } from '@inertiajs/inertia-vue3';
 import FormInputText from '@/Components/form/FormInputText.vue'
 import ImagePreview from '@/Components/Image/ImagePreview.vue';
 import FormInputImage from '@/Components/form/FormInputImage.vue';
+import AppButton from '@/Components/UI/AppButton.vue';
+import SwitchButton from '@/Components/UI/SwitchButton.vue';
 
 
 const form = useForm({
   name: "",
   price: 0,
-  image: null
+  image: null,
+  active: false
 })
 
+
 const submit = () => {
+
   form.post(route('admin.dish.store'))
 }
 
@@ -21,6 +26,7 @@ const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
 const handleSelectedMedia = (files) => {
   Array.from(files).forEach((file) => {
     if (allowedMediaTypes.includes(file.type)) {
+      console.log(file)
       form.image = file;
     } else {
       alert("Invalid file type");
@@ -37,14 +43,21 @@ const handleSelectedMedia = (files) => {
   <PageTitle>
     Add Dish
   </PageTitle>
-  <form class="max-w-md mx-auto mt-10" @submit.prevent="submit">
+  <ImagePreview class="max-w-md m-auto my-10" v-if="form.image" :image="form.image" />
+  {{ form }}
+  <form enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
     <div class="flex">
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
-      <FormInputText label="Price" v-model="form.price" :error="form.errors.price" />
+      <FormInputText label="Price" v-model="form.price" :error="form.errors.price" type="number" />
     </div>
     <div>
-      <FormInputImage label="Dish Image" @selected="handleSelectedMedia" />
+      <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />
+      <SwitchButton class="my-4" v-model="form.active" label="Activate" />
+
     </div>
+    <AppButton class="mb-4 px-10" type="submit">
+      Add
+    </AppButton>
   </form>
-  <ImagePreview v-if="form.image" :image="form.image" />
+
 </template>
