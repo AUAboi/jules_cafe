@@ -30,11 +30,20 @@ class Dish extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
+        })->when($filters['category'] ?? null, function ($query, $category) {
+            $query->whereHas('categories', function ($query) use ($category) {
+                $query->where('category_id', $category);
+            });
         });
     }
 
     public function media()
     {
         return $this->hasOne(DishMedia::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_dishes');
     }
 }

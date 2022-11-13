@@ -2,39 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\AddToCart;
+use App\Actions\RemoveFromCart;
 use App\Models\Dish;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function add(Request $request)
+    public function add(Request $request, AddToCart $addToCart)
     {
         $request->validate([
             'id' => 'required|exists:dishes,id'
         ]);
 
         $dish = Dish::find($request->id);
-        \Cart::session($request->user()->id)->add(array(
-            'id' => $dish->id, // unique row ID
-            'name' => $dish->name,
-            'price' => $dish->price,
-            'quantity' => 1,
-            'attributes' => array(),
-            'associatedModel' => $dish
-        ));
+
+        $addToCart->handle(auth()->user(), $dish);
 
         return redirect()->back();
     }
 
-    public function remove(Request $request)
+    public function remove(Request $request, RemoveFromCart $removeFromCart)
     {
         $request->validate([
             'id' => 'required|exists:dishes,id'
         ]);
+
         $dish = Dish::find($request->id);
 
-        \Cart::session($request->user()->id)->remove($dish->id);
+        $removeFromCart->handle(auth()->user(), $dish);
+
         return redirect()->back();
     }
 }

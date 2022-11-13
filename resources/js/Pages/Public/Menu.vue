@@ -1,8 +1,11 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/inertia-vue3"
+import { useForm } from "@inertiajs/inertia-vue3"
+
+import CategoryNav from "@/Components/Navigation/CategoryNav.vue"
 
 const props = defineProps({
   dishes: { required: true },
+  categories: Array,
   cart: { default: [] }
 })
 
@@ -28,33 +31,41 @@ const removeFromCart = (id) => {
 </script>
 
 <template>
-  {{ cart }}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-    <div class="" v-for="dish in dishes.data" :key="dish.id">
-      <div class="bg-white rounded-b-xl w-fit ">
-        <img v-if="dish.image" class="w-60 h-56" :src="dish.image" :alt="dish.name + ' image'">
-        <img v-else class="w-60" src="/storage/site_images/samplefood.jpg" :alt="dish.name + ' image'">
-        <div class="p-2 ">
-          <h2 class="bold">{{ dish.name }} </h2>
-          <h2>{{ dish.price }} </h2>
-          <div class=" flex justify-between">
-            <div>
-              <button @click.prevent="addToCart(dish.id)" :disabled="form.processing"
-                class="bg-yellow-500 px-2 py-1 rounded">Add to
-                cart </button>
-              <span class="mx-4">
-                {{ cart[dish.id]?.quantity }}
-
-              </span>
+  <section class="bg-gray-100">
+    <CategoryNav :categories="categories" />
+    <h2 class="text-4xl text-center my-6">Menu</h2>
+    {{ cart }}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
+      <div v-for="dish in dishes.data" :key="dish.id">
+        <div class="bg-white rounded-t-xl w-60">
+          <img class="w-full h-56 rounded-t-xl" :src="dish.image ?? '/storage/site_images/samplefood.jpg'"
+            :alt="dish.name + ' image'">
+          <div class="p-2 ">
+            <div class="flex justify-between py-2 font-bold">
+              <h2 class="bold">{{ dish.name }} </h2>
+              <h2>{{ dish.price }} </h2>
             </div>
-            <button :disabled="form.processing" @click.prevent="removeFromCart(dish.id)"
-              v-if="cart[dish.id]">Remove</button>
+
+            <div class=" flex justify-between">
+              <div>
+                <button @click.prevent="addToCart(dish.id)" :disabled="form.processing"
+                  class="bg-yellow-500 px-2 py-1 rounded" :class="form.processing ? 'opacity-50' : ''">Add to
+                  cart </button>
+                <span class="mx-4">
+                  {{ cart[dish.id]?.quantity }}
+
+                </span>
+              </div>
+              <button :disabled="form.processing" @click.prevent="removeFromCart(dish.id)"
+                v-if="cart[dish.id]">Remove</button>
+            </div>
+
           </div>
-
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
+  </section>
+
 
 </template>
