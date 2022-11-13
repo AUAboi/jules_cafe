@@ -30,6 +30,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('admin.category')" :active="route().current('admin.category')">
+                                    Category
+                                </NavLink>
                                 <NavLink :href="route('admin.dish')" :active="route().current('admin.dish')">
                                     Dish
                                 </NavLink>
@@ -92,9 +95,13 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('admin.dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.category')" :active="route().current('admin.category')">
+                            Category
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.dish')" :active="route().current('admin.dish')">
                             Dish
                         </ResponsiveNavLink>
+
                     </div>
 
                     <!-- Responsive Settings Options -->

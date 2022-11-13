@@ -49,6 +49,7 @@ watch(
   <PageTitle>
     Menu
   </PageTitle>
+
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
     <SearchBox class="w-full max-w-md my-4" v-model="form.search" @reset="reset" />
     <Link :href="route('admin.dish.create')" as="button" class="primary-btn h-fit">

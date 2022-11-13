@@ -21,7 +21,6 @@ class DishFactory extends Factory
         return [
             'name' => $faker->foodName(),
             'price' => $faker->unique()->numberBetween(100, 1000),
-            'image' => 'samplefood.jpg',
         ];
     }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('dish_media', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dish_id');
-            $table->foreignId('media_id');
+            $table->foreignId('dish_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('media_id')->nullable();
             $table->timestamps();
         });
     }

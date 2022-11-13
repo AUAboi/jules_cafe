@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,6 +23,10 @@ Route::get('/', function () {
     return Inertia::render('Public/Home');
 })->name('home');
 
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/dashboard', function () {
@@ -30,6 +37,8 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
 
     Route::get('/dish/create', [DishController::class, 'create'])->name('admin.dish.create');
     Route::post('/dish/create', [DishController::class, 'store'])->name('admin.dish.store');
+
+    Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
 });
 
 

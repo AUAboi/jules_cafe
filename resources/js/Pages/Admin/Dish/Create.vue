@@ -44,7 +44,6 @@ const handleSelectedMedia = (files) => {
     Add Dish
   </PageTitle>
   <ImagePreview class="max-w-md m-auto my-10" v-if="form.image" :image="form.image" />
-  {{ form }}
   <form enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
     <div class="flex">
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />

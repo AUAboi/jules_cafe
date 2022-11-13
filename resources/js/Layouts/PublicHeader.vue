@@ -20,9 +20,9 @@ const props = defineProps({
     <div class="container sm:mx-auto flex flex-wrap sm:p-5 flex-col md:flex-row items-center">
       <nav class="flex text-black lg:w-2/5 flex-wrap sm:mb-6 md:mb-0 items-center text-base md:ml-auto nav-links"
         :class="{ 'nav-active': show }">
-        <Link href="/" class="sm:ml-5 md:mr-5 lg:mx-3 px-2 cursor-pointer md:text-lg "
+        <Link :href="route('home')" class="sm:ml-5 md:mr-5 lg:mx-3 px-2 cursor-pointer md:text-lg "
           :class="{ 'border-b-2 border-black': $page.component.startsWith('Public/Home') }">Home</Link>
-        <Link href="/menu" class="sm:ml-5 md:mr-5 lg:mx-3 px-2 cursor-pointer md:text-lg "
+        <Link :href="route('menu')" class="sm:ml-5 md:mr-5 lg:mx-3 px-2 cursor-pointer md:text-lg "
           :class="{ 'underline': $page.component.startsWith('Public/Menu') }">Menu</Link>
 
       </nav>

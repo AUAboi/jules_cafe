@@ -13,8 +13,7 @@ class Dish extends Model
     protected $fillable = [
         'name',
         'price',
-        'is_active',
-        'image'
+        'active',
     ];
 
     protected function price(): Attribute
@@ -22,7 +21,7 @@ class Dish extends Model
         //Smallest unit is stored in database, currency being ringgit we are storing sen
         //Setting back to ringgit on retrieval
         return Attribute::make(
-            get: fn ($price) => $price / 100,
+            get: fn ($price) => $price / 100 . "rm",
             set: fn ($price) => $price * 100,
         );
     }
@@ -32,5 +31,10 @@ class Dish extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
         });
+    }
+
+    public function media()
+    {
+        return $this->hasOne(DishMedia::class);
     }
 }
