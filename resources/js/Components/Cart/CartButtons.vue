@@ -30,11 +30,11 @@ const removeFromCart = (id) => {
 
 <template>
   <div>
-    <div class="flex justify-between items-center" v-if="cart[dish.id]">
+    <div class="flex justify-between items-center" v-if="cart.content[dish.id]">
       <button @click.prevent="addToCart(dish.id)" :disabled="form.processing"
         class="bg-yellow-500 text-white py-1 px-8 rounded" :class="form.processing ? 'opacity-50' : ''">+</button>
 
-      <span class="text-xl">{{ cart[dish.id]?.quantity }}</span>
+      <span class="text-xl">{{ cart.content[dish.id]?.quantity }}</span>
       <button :class="form.processing ? 'opacity-50' : ''" class="bg-red-500 text-white py-1 px-8 rounded"
         :disabled="form.processing" @click.prevent="removeFromCart(dish.id)">-</button>
     </div>

@@ -31,15 +31,11 @@ class MenuController extends Controller
 
         $categories = Category::all();
 
-        if (auth()->id())
-            $cart = \Cart::session(auth()->id())->getContent()->toArray();
-        else {
-            $cart = [];
-        }
+
         return Inertia::render('Public/Menu', [
             'dishes' => $dishes,
             'categories' => $categories,
-            'cart' => $cart,
+
         ]);
     }
 }

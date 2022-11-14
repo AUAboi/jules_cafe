@@ -21,7 +21,7 @@ class Dish extends Model
         //Smallest unit is stored in database, currency being ringgit we are storing sen
         //Setting back to ringgit on retrieval
         return Attribute::make(
-            get: fn ($price) => $price / 100 . "rm",
+            get: fn ($price) => config('constants.currency') . $price / 100,
             set: fn ($price) => $price * 100,
         );
     }
