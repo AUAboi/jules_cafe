@@ -16,7 +16,13 @@ class CartController extends Controller
             'id' => 'required|exists:dishes,id'
         ]);
 
-        $dish = Dish::find($request->id);
+
+
+        $dish = Dish::findOrFail($request->id);
+
+        if (!$dish->active) {
+            return redirect()->back()->with('error', 'Not available anymore');
+        }
 
         $addToCart->handle(auth()->user(), $dish);
 
@@ -29,7 +35,7 @@ class CartController extends Controller
             'id' => 'required|exists:dishes,id'
         ]);
 
-        $dish = Dish::find($request->id);
+        $dish = Dish::findOrFail($request->id);
 
         $removeFromCart->handle(auth()->user(), $dish);
 

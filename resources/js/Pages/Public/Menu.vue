@@ -2,6 +2,7 @@
 import CategoryNav from "@/Components/Navigation/CategoryNav.vue"
 import CartButtons from "@/Components/Cart/CartButtons.vue";
 import Paginator from "@/Components/Paginator.vue";
+import { Head } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
   dishes: { required: true },
@@ -13,9 +14,14 @@ const props = defineProps({
 </script>
 
 <template>
+
+  <Head title="Menu"></Head>
   <section class="bg-gray-100 ">
     <CategoryNav :categories="categories" />
-    <h2 class="text-4xl text-center my-6">Menu</h2>
+    <div class="my-6">
+      <h2 class="text-4xl text-center ">Menu</h2>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4 pb-6">
       <div v-for="dish in dishes.data" :key="dish.id">
         <div class="bg-white rounded-t-xl w-60">

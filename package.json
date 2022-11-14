@@ -19,7 +19,5 @@
         "vite": "^3.0.0",
         "vue": "^3.2.41"
     },
-    "dependencies": {
-        "@vue-hero-icons/solid": "^1.7.2"
-    }
+    "dependencies": {}
 }

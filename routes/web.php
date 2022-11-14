@@ -25,8 +25,12 @@ Route::get('/', function () {
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+Route::prefix('/cart')->middleware(['auth'])->group(function () {
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+});
+
 
 Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/dashboard', function () {
@@ -40,7 +44,6 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
 
     Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
 });
-
 
 
 
