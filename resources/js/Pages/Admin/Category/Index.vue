@@ -7,7 +7,6 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import throttle from "lodash/throttle";
 import pickBy from "lodash/pickBy";
 import { reactive, watch } from 'vue';
-import DishCard from '@/Components/Cards/DishCard.vue';
 
 
 
@@ -52,12 +51,17 @@ watch(
 
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
     <SearchBox class="w-full max-w-md my-4" v-model="form.search" @reset="reset" />
-    <Link :href="route('admin.dish.create')" as="button" class="primary-btn h-fit">
+    <Link :href="route('admin.category.create')" as="button" class="primary-btn h-fit">
     Add new category
     </Link>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-    <DishCard v-for="dish in categories.data" :key="dish.id" :dish="dish" />
+    <div v-for="category in categories" :key="category.id" class="bg-white rounded-b-xl w-fit ">
+      <img v-if="category.image" class="w-60 h-56" :src="category.image" :alt="category.name + ' image'">
+      <img v-else class="w-60" src="/storage/site_images/samplefood.jpg" :alt="category.name + ' image'">
+      <div class="p-2 text-center text-xl">
+        <h2 class="font-bold">{{ category.name }} </h2>
+      </div>
+    </div>
   </div>
-  <Paginator :links="categories.links" />
 </template>

@@ -17,7 +17,6 @@ class CartController extends Controller
         ]);
 
 
-
         $dish = Dish::findOrFail($request->id);
 
         if (!$dish->active) {

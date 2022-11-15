@@ -18,7 +18,7 @@ const form = useForm({
 
 const submit = () => {
 
-  form.post(route('admin.dish.store'))
+  form.post(route('admin.category.store'))
 }
 
 const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
@@ -38,20 +38,21 @@ const handleSelectedMedia = (files) => {
 </script>
 <template>
 
-  <Head title="Add Dish"></Head>
+  <Head title="Add Category"></Head>
   <PageTitle>
-    Add Dish
+    Add Category
+
+    <Head title="Add Category"></Head>
+
   </PageTitle>
   <ImagePreview class="max-w-md m-auto my-10" v-if="form.image" :image="form.image" />
   <form enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
-    <div class="flex">
-      <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
-      <FormInputText label="Price" v-model="form.price" :error="form.errors.price" type="number" />
+    <div>
+      <FormInputText style="width: 100%" label="Name" v-model="form.name" :error="form.errors.name" />
     </div>
     <div>
-      <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />
+      <FormInputImage label="Category Image" @selected="handleSelectedMedia" :error="form.errors.image" />
       <SwitchButton class="my-4" v-model="form.active" label="Activate" />
-
     </div>
     <AppButton class="mb-4 px-10" type="submit">
       Add

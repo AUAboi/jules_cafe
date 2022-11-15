@@ -18,13 +18,16 @@ class MenuSeeder extends Seeder
     {
         Dish::factory(10)->create();
         Category::create([
-            'name' => 'Desserts'
+            'name' => 'Hot Coffee'
         ]);
         Category::create([
-            'name' => 'Fast Food'
+            'name' => 'Cold Coffee'
         ]);
         Category::create([
-            'name' => 'Drinks'
+            'name' => 'Espresso'
+        ]);
+        Category::create([
+            'name' => 'Quick Bites'
         ]);
     }
 }

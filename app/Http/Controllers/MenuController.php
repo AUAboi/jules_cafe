@@ -23,7 +23,7 @@ class MenuController extends Controller
             ->through(fn ($dish) => [
                 'id' => $dish->id,
                 'name' => $dish->name,
-                'price' => $dish->price,
+                'price' => $dish->formatted_price,
                 'image' => $dish->media ? $dish->media->baseMedia->getUrl() : null,
                 'category' => $dish->categories
             ]);

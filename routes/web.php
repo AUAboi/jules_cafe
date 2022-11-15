@@ -23,8 +23,9 @@ Route::get('/', function () {
     return Inertia::render('Public/Home');
 })->name('home');
 
-Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+Route::get('/category', [CategoryController::class, 'publicView'])->name('category');
 
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 Route::prefix('/cart')->middleware(['auth'])->group(function () {
     Route::post('/add', [CartController::class, 'add'])->name('cart.add');
@@ -42,7 +43,11 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/dish/create', [DishController::class, 'create'])->name('admin.dish.create');
     Route::post('/dish/create', [DishController::class, 'store'])->name('admin.dish.store');
 
+
     Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
+
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
+    Route::post('/category/create', [CategoryController::class, 'store'])->name('admin.category.store');
 });
 
 

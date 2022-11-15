@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
             \Cart::session(auth()->id());
             $cart = [
                 'content' => \Cart::getContent()->toArray(),
-                'total' => config('constants.currency') . \Cart::getTotal()
+                'total' => config('constants.currency') . ' ' . \Cart::getTotal()
             ];
         } else {
             $cart = ['content' => [], 'total' => null];
