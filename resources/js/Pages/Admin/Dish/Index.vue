@@ -57,7 +57,15 @@ watch(
     </Link>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-    <DishCard v-for="dish in dishes.data" :key="dish.id" :dish="dish" />
+    <DishCard v-for="dish in dishes.data" :key="dish.id" :dish="dish"
+      :class="dish.active ? 'opacity-100' : 'opacity-50'">
+      <div class="flex justify-between items-center">
+        <Link :href="route('admin.dish.edit', dish.id)" as="button" class="primary-btn">Edit</Link>
+        <Link method="put" :href="route('admin.dish.activate', dish.id)" v-if="!dish.active"
+          class="underline text-gray-900 text-sm">
+        Activate?</Link>
+      </div>
+    </DishCard>
   </div>
   <Paginator :links="dishes.links" />
 </template>

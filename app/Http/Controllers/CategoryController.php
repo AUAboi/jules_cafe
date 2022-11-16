@@ -63,6 +63,7 @@ class CategoryController extends Controller
     {
 
         $categories = Category::orderBy("name")
+            ->active()
             ->get()
             ->transform(fn ($category) => [
                 'id' => $category->id,

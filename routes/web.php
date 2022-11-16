@@ -4,7 +4,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -38,12 +37,20 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
 
+
+    //Dish routes
     Route::get('/dish', [DishController::class, 'index'])->name('admin.dish');
 
     Route::get('/dish/create', [DishController::class, 'create'])->name('admin.dish.create');
     Route::post('/dish/create', [DishController::class, 'store'])->name('admin.dish.store');
 
+    Route::get('/dish/{dish}/', [DishController::class, 'edit'])->name('admin.dish.edit');
+    Route::put('/dish/{dish}/activate', [DishController::class, 'activate'])->name('admin.dish.activate');
+    Route::put('/dish/{dish}/update', [DishController::class, 'update'])->name('admin.dish.update');
 
+    Route::delete('/dish/{dish}/delete', [DishController::class, 'destroy'])->name('admin.dish.destroy');
+
+    // Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
 
     Route::get('/category/create', [CategoryController::class, 'create'])->name('admin.category.create');

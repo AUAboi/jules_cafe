@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Dish;
-use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,9 +14,8 @@ class MenuController extends Controller
         $filters = $request->all('search', 'category');
 
         $dishes = Dish::orderBy("name")
-
-
             ->filter($filters)
+            ->active()
             ->paginate(9)
             ->withQueryString()
             ->through(fn ($dish) => [
@@ -29,7 +27,7 @@ class MenuController extends Controller
             ]);
 
 
-        $categories = Category::all();
+        $categories = Category::active()->get();
 
 
         return Inertia::render('Public/Menu', [

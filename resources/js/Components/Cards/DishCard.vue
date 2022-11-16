@@ -5,12 +5,15 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-white rounded-b-xl w-fit ">
-    <img v-if="dish.image" class="w-60 h-56" :src="dish.image" :alt="dish.name + ' image'">
-    <img v-else class="w-60" src="/storage/site_images/samplefood.jpg" :alt="dish.name + ' image'">
+  <div class="bg-white rounded-t-xl w-60">
+    <img class="w-full h-56 rounded-t-xl" :src="dish.image ?? '/storage/site_images/samplefood.jpg'"
+      :alt="dish.name + ' image'">
     <div class="p-2 ">
-      <h2 class="bold">{{ dish.name }} </h2>
-      <h2>{{ dish.price }} </h2>
+      <div class="flex justify-between py-2 font-bold">
+        <h2 class="bold">{{ dish.name }} </h2>
+        <h2>{{ dish.price }} </h2>
+      </div>
+      <slot />
     </div>
   </div>
 </template>

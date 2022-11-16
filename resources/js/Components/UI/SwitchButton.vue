@@ -2,7 +2,7 @@
 const props = defineProps({
   label: String,
   modelValue: {
-    required: true
+    default: false
   }
 })
 </script>
@@ -12,7 +12,8 @@ const props = defineProps({
 
     <label for="toggle" class="flex items-center cursor-pointer">
       <div class="relative">
-        <input type="checkbox" id="toggle" @change="$emit('update:modelValue', $event.target.checked)" class="sr-only">
+        <input :checked="modelValue" type="checkbox" id="toggle"
+          @change="$emit('update:modelValue', $event.target.checked)" class="sr-only">
         <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
         <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
       </div>

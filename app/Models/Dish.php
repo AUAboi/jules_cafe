@@ -16,6 +16,10 @@ class Dish extends Model
         'active',
     ];
 
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
     protected function price(): Attribute
     {
         //Smallest unit is stored in database, currency being ringgit we are storing sen
@@ -42,6 +46,10 @@ class Dish extends Model
         });
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('active', 1);
+    }
 
     public function media()
     {
