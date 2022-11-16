@@ -29,10 +29,14 @@ class MenuController extends Controller
 
         $categories = Category::active()->get();
 
-
+        \Cart::session(auth()->id());
         return Inertia::render('Public/Menu', [
             'dishes' => $dishes,
             'categories' => $categories,
+            'cart' => [
+                'content' => \Cart::getContent()->toArray(),
+                'total' => config('constants.currency') . ' ' . \Cart::getTotal()
+            ]
 
         ]);
     }

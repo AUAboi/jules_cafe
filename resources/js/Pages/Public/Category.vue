@@ -30,7 +30,7 @@ const props = defineProps({
         :style="{ backgroundImage: `url(${category.image ? category.image : '/storage/site_images/samplefood.jpg'})` }"
         class="bg-image relative w-56 h-56 flex justify-center items-center bg-cover bg-center">
         <div class="overlay "></div>
-        <h2 class="text-2xl text-white z-20 opacity-0">Category name</h2>
+        <h2 class="text-2xl text-white z-20 opacity-0">{{ category.name }}</h2>
       </div>
     </div>
 
@@ -48,7 +48,7 @@ const props = defineProps({
 <style scoped>
 .overlay {
   transition: all 500ms ease-in-out;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.616);
   position: absolute;
   width: 14rem;
   height: 14rem;

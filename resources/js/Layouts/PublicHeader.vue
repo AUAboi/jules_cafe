@@ -41,7 +41,7 @@ const props = defineProps({
       </span>
       </Link>
       <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 mb-2 sm:mb-0">
-        <Link v-if="$page.props.auth.user" href="/order" class="btn-order inline-flex font-sans items-center bg-yellow-200 border-0 py-1 px-2 focus:outline-none
+        <Link v-if="$page.props.auth.user" :href="route('cart')" class="btn-order inline-flex font-sans items-center bg-yellow-200 border-0 py-1 px-2 focus:outline-none
 				hover:bg-yellow-300 rounded text-base md:mt-0">
         {{ $page.props.cart.total }} <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg">

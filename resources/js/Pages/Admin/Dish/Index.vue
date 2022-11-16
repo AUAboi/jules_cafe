@@ -8,6 +8,7 @@ import throttle from "lodash/throttle";
 import pickBy from "lodash/pickBy";
 import { reactive, watch } from 'vue';
 import DishCard from '@/Components/Cards/DishCard.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
 
 
 
@@ -16,17 +17,17 @@ const props = defineProps({
   dishes: {
     required: true,
   },
-  filters: {
-    default: { search: "" }
-  }
+  filters: Object
 })
 
 const form = reactive({
-  search: props.filters.search
+  search: props.filters.search,
+  active: props.filters.active
 })
 
 const reset = () => {
   form.search = null;
+  form.active = null
 }
 
 watch(
@@ -49,9 +50,14 @@ watch(
   <PageTitle>
     Menu
   </PageTitle>
-
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
-    <SearchBox class="w-full max-w-md my-4" v-model="form.search" @reset="reset" />
+    <SearchBox class="w-full max-w-md my-4 " v-model="form.search" filterable @reset="reset">
+      <div class="flex flex-col gap-4">
+        <p @click="form.active = null" class="cursor-pointer">All</p>
+        <p @click="form.active = 1" class="cursor-pointer">Active</p>
+      </div>
+
+    </SearchBox>
     <Link :href="route('admin.dish.create')" as="button" class="primary-btn h-fit">
     Add new dish
     </Link>

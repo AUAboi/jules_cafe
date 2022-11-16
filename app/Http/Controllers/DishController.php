@@ -13,10 +13,9 @@ class DishController extends Controller
 {
     public function index(Request $request)
     {
-        $filters = $request->all('search');
-
-        $dishes = Dish::orderBy("name")
-            ->filter($filters)
+        $filters = $request->all('search', 'active');
+        $dishes = Dish::orderBy('name')
+            ->filter($request->only('search', 'active'))
             ->paginate(9)
             ->withQueryString()
             ->through(fn ($dish) => [
@@ -31,7 +30,8 @@ class DishController extends Controller
         return Inertia::render(
             "Admin/Dish/Index",
             [
-                'dishes' => $dishes
+                'dishes' => $dishes,
+                'filters' => $filters
             ]
         );
     }
@@ -43,7 +43,6 @@ class DishController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'string|required',
             'price' => 'integer|required|min:1',

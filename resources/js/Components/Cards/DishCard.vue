@@ -11,7 +11,7 @@ const props = defineProps({
     <div class="p-2 ">
       <div class="flex justify-between py-2 font-bold">
         <h2 class="bold">{{ dish.name }} </h2>
-        <h2>{{ dish.price }} </h2>
+        <h2 class="whitespace-nowrap">{{ dish.price }} </h2>
       </div>
       <slot />
     </div>

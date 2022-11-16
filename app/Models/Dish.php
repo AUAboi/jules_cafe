@@ -43,6 +43,8 @@ class Dish extends Model
             $query->whereHas('categories', function ($query) use ($category) {
                 $query->where('category_id', $category);
             });
+        })->when($filters['active'] ?? null, function ($query, $active) {
+            $query->active();
         });
     }
 
