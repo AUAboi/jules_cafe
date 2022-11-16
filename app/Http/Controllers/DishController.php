@@ -115,6 +115,17 @@ class DishController extends Controller
         return Redirect::route('admin.dish')->with('success', 'Dish edited succesfully.');
     }
 
+    public function destroy(Dish $dish)
+    {
+        if ($dish->media) {
+            $dish->media->delete();
+        }
+
+        $dish->delete();
+
+        return Redirect::route('admin.dish')->with('success', 'Dish deleted succesfully.');
+    }
+
     public function activate(Dish $dish)
     {
         $dish->update(['active' => 1]);

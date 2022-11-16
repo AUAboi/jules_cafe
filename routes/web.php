@@ -55,6 +55,12 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
 
     Route::get('/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
     Route::post('/category/create', [CategoryController::class, 'store'])->name('admin.category.store');
+
+    Route::get('/category/{category}/', [CategoryController::class, 'edit'])->name('admin.category.edit');
+    Route::put('/category/{category}/activate', [CategoryController::class, 'activate'])->name('admin.category.activate');
+    Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('admin.category.update');
+
+    Route::delete('/category/{category}/delete', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 });
 
 

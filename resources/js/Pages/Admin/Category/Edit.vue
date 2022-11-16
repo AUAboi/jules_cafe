@@ -9,12 +9,19 @@ import SwitchButton from '@/Components/UI/SwitchButton.vue';
 import { onMounted } from 'vue';
 
 const props = defineProps({
-  dish: {
+  category: {
     required: true,
     type: Object
   }
 })
 
+
+const form = useForm({
+  '_method': 'put',
+  name: props.category.name,
+  image: null,
+  active: props.category.active
+})
 
 const urlToImageFile = async (url) => {
   let image = null
@@ -27,20 +34,12 @@ const urlToImageFile = async (url) => {
 }
 
 
-const form = useForm({
-  '_method': 'put',
-  name: props.dish.name,
-  price: props.dish.price,
-  image: null,
-  active: props.dish.active
-})
-
 
 const submit = () => {
-  form.post(route('admin.dish.update', props.dish.id))
+  form.post(route('admin.category.update', props.category.id))
 }
 const destroy = () => {
-  form.delete(route('admin.dish.destroy', props.dish.id))
+  form.delete(route('admin.category.destroy', props.category.id))
 }
 
 const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
@@ -55,7 +54,7 @@ const handleSelectedMedia = (files) => {
   });
 };
 const setFormValues = async () => {
-  form.image = await urlToImageFile(props.dish.image)
+  form.image = await urlToImageFile(props.category.image)
 }
 onMounted(setFormValues)
 </script>
@@ -63,17 +62,16 @@ onMounted(setFormValues)
 
   <Head :title="`Edit ${form.name}`"></Head>
   <PageTitle>
-    Edit Dish
+    Edit category
   </PageTitle>
   <ImagePreview class="max-w-md m-auto my-10" v-if="form.image" :image="form.image" />
-  <h2 v-else class="text-center text-2xl my-10">No image associated with this dish.</h2>
+  <h2 v-else class="text-center text-2xl my-10">No image associated with this category.</h2>
   <form id="edit-form" enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
     <div class="flex">
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
-      <FormInputText label="Price" v-model="form.price" :error="form.errors.price" type="number" />
     </div>
     <div>
-      <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />
+      <FormInputImage label="Category Image" @selected="handleSelectedMedia" :error="form.errors.image" />
       <SwitchButton class="my-4" v-model="form.active" label="Activate" />
 
     </div>

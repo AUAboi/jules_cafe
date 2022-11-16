@@ -56,11 +56,18 @@ watch(
     </Link>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-    <div v-for="category in categories" :key="category.id" class="bg-white rounded-b-xl w-fit ">
+    <div v-for="category in categories" :key="category.id" class="bg-white rounded-b-xl w-fit "
+      :class="category.active ? 'opacity-100' : 'opacity-60'">
       <img v-if="category.image" class="w-60 h-56" :src="category.image" :alt="category.name + ' image'">
       <img v-else class="w-60" src="/storage/site_images/samplefood.jpg" :alt="category.name + ' image'">
       <div class="p-2 text-center text-xl">
         <h2 class="font-bold">{{ category.name }} </h2>
+      </div>
+      <div class="flex justify-between items-center p-2">
+        <Link :href="route('admin.category.edit', category.id)" as="button" class="primary-btn">Edit</Link>
+        <Link method="put" :href="route('admin.category.activate', category.id)" v-if="!category.active"
+          class="underline text-gray-900 text-sm">
+        Activate?</Link>
       </div>
     </div>
   </div>
