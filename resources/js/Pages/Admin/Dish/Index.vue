@@ -8,7 +8,6 @@ import throttle from "lodash/throttle";
 import pickBy from "lodash/pickBy";
 import { reactive, watch } from 'vue';
 import DishCard from '@/Components/Cards/DishCard.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
 
 
 
@@ -53,8 +52,9 @@ watch(
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
     <SearchBox class="w-full max-w-md my-4 " v-model="form.search" filterable @reset="reset">
       <div class="flex flex-col gap-4">
-        <p @click="form.active = null" class="cursor-pointer">All</p>
-        <p @click="form.active = 1" class="cursor-pointer">Active</p>
+        <Link as="p" :href="route('admin.dish')" class="cursor-pointer">All</Link>
+        <Link as="p" :href="route('admin.dish', { active: 1 })" class="cursor-pointer">Active</Link>
+        <Link as="p" :href="route('admin.dish', { active: 0 })" class="cursor-pointer">Inactive</Link>
       </div>
 
     </SearchBox>

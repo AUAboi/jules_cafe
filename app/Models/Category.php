@@ -22,13 +22,19 @@ class Category extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
-        });
+        })->active($filters['active']);
     }
 
-    public function scopeActive($query)
+
+
+    public function scopeActive($query, $active)
     {
-        $query->where('active', 1);
+        if (!is_null($active)) {
+            $query->where('active', $active);
+        }
     }
+
+
 
     public function media()
     {

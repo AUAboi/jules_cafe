@@ -1,20 +1,28 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3"
+import { Link, Head } from "@inertiajs/inertia-vue3"
 
 import CartItem from '@/Components/Cart/CartItem.vue';
+import { computed } from "@vue/reactivity";
 
 const props = defineProps({
   cart: Object
 })
+
+
+const hasCartItems = computed(() => {
+  return Object.keys(props.cart.content).length
+});
 </script>
 
 <template>
-  <div class="container mx-auto mt-10">
-    <div class="flex justify-evenly flex-wrap shadow-md my-10">
+
+  <Head title="View Cart"></Head>
+  <div v-if="hasCartItems">
+    <div class="flex justify-evenly flex-wrap  my-10">
       <div class=" bg-white px-10 py-10">
         <div class="flex justify-between border-b pb-8">
-          <h1 class="font-semibold text-2xl">Shopping Cart</h1>
-          <h2 class="font-semibold text-2xl">Items 3</h2>
+          <h1 class="font-semibold text-2xl">Cart</h1>
+          <h2 class="font-semibold text-2xl">{{ cart.quantity }} Items</h2>
         </div>
         <div class="flex mt-10 mb-5">
           <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Dish</h3>
@@ -35,8 +43,8 @@ const props = defineProps({
       <div id="summary" class=" px-8 py-10">
         <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
         <div class="flex justify-between mt-10 mb-5">
-          <span class="font-semibold text-sm uppercase">Items 3</span>
-          <span class="font-semibold text-sm">590$</span>
+          <span class="font-semibold text-sm uppercase">{{ cart.quantity }} Items</span>
+          <span class="font-semibold text-sm">{{ cart.total }}</span>
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -44,15 +52,27 @@ const props = defineProps({
             <option>Standard shipping - $10.00</option>
           </select>
         </div>
-        <div class="py-10">
-          <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
-          <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full">
+        <div class="my-4">
+          <div>
+            <input id="takeaway" name="type" type="radio">
+            <label for="takeaway" class="font-medium inline-block mb-3 text-sm uppercase px-2">Take away</label>
+
+          </div>
+          <div>
+            <input id="dinein" name="type" type="radio">
+            <label for="dinein" class="font-medium inline-block mb-3 text-sm uppercase px-2">Dine-in</label>
+          </div>
+
+        </div>
+        <div class="flex flex-col gap-1 py-10">
+          <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Special instructions</label>
+          <textarea name="note" id="note" cols="20" rows="5" class="resize-none"></textarea>
         </div>
         <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
-            <span>$600</span>
+            <span>{{ cart.total }}</span>
           </div>
           <button
             class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
@@ -61,6 +81,10 @@ const props = defineProps({
 
     </div>
   </div>
+  <div class="text-4xl py-16 text-center">
+    <h1>Oops, it seems your cart is empty</h1>
+  </div>
+
 
 </template>
 

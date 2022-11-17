@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $filters = $request->all('search');
+        $filters = $request->all('search', 'active');
 
         $categories = Category::orderBy("name")
             ->filter($filters)
@@ -122,8 +122,9 @@ class CategoryController extends Controller
     public function publicView()
     {
 
-        $categories = Category::orderBy("name")
-            ->active()
+        $categories =
+            Category::orderBy("name")
+            ->where('active', 1)
             ->get()
             ->transform(fn ($category) => [
                 'id' => $category->id,

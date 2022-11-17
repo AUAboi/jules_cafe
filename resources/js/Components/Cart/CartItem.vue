@@ -37,7 +37,7 @@ const removeItem = (id) => {
 <template>
   <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
     <div class="flex w-2/5">
-      <div class="w-20">
+      <div class="w-40">
         <img class="h-24" :src="cartDish.image ?? '/storage/site_images/samplefood.jpg'">
       </div>
       <div class="flex flex-col justify-between ml-4 flex-grow">

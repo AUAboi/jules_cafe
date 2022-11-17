@@ -50,7 +50,14 @@ watch(
   </PageTitle>
 
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
-    <SearchBox class="w-full max-w-md my-4" v-model="form.search" @reset="reset" />
+    <SearchBox class="w-full max-w-md my-4" v-model="form.search" filterable @reset="reset">
+      <div class="flex flex-col gap-4">
+        <Link as="p" :href="route('admin.category')" class="cursor-pointer">All</Link>
+        <Link as="p" :href="route('admin.category', { active: 1 })" class="cursor-pointer">Active</Link>
+        <Link as="p" :href="route('admin.category', { active: 0 })" class="cursor-pointer">Inactive</Link>
+      </div>
+
+    </SearchBox>
     <Link :href="route('admin.category.create')" as="button" class="primary-btn h-fit">
     Add new category
     </Link>

@@ -14,8 +14,8 @@ class MenuController extends Controller
         $filters = $request->all('search', 'category');
 
         $dishes = Dish::orderBy("name")
-            ->filter($filters)
-            ->active()
+
+            ->filter(array_merge($filters, ['active' => 1]))
             ->paginate(9)
             ->withQueryString()
             ->through(fn ($dish) => [
@@ -27,9 +27,10 @@ class MenuController extends Controller
             ]);
 
 
-        $categories = Category::active()->get();
+        $categories = Category::where('active', 1)->get();
 
         \Cart::session(auth()->id());
+
         return Inertia::render('Public/Menu', [
             'dishes' => $dishes,
             'categories' => $categories,

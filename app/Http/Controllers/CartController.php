@@ -16,34 +16,35 @@ class CartController extends Controller
         \Cart::session(auth()->id());
 
         $row = \Cart::getContent();
-
-
-        // remove from cart if item doesnt exist anymore
-        foreach ($row as $key => $item) {
-            $dish = Dish::find($item->id);
-            if (!$dish) {
-                \Cart::remove($item->id);
-                unset($row[$key]);
+        $cartContent = [];
+        if ($row->count()) {
+            // remove from cart if item doesnt exist anymore
+            foreach ($row as $key => $item) {
+                $dish = Dish::find($item->id);
+                if (!$dish) {
+                    \Cart::remove($item->id);
+                    unset($row[$key]);
+                }
             }
+
+
+            $cartContent = $row->transform(fn ($item) => [
+                'id' => $item->id,
+                'name' => $item->associatedModel->name,
+                'price' => $item->associatedModel->formatted_price,
+                'quantity' => $item->quantity,
+                'total_price' => config('constants.currency') . ' ' . $item->associatedModel->price * $item->quantity,
+                'image' => $item->associatedModel->media ? $item->associatedModel->media->baseMedia->getUrl() : null,
+            ]);
         }
-
-
-        $cartContent = $row->transform(fn ($item) => [
-            'id' => $item->id,
-            'name' => $item->associatedModel->name,
-            'price' => $item->associatedModel->formatted_price,
-            'quantity' => $item->quantity,
-            'total_price' => config('constants.currency') . ' ' . $item->associatedModel->price * $item->quantity,
-            'image' => $item->associatedModel->media ? $item->associatedModel->media->baseMedia->getUrl() : null,
-        ]);
-
 
 
 
         return Inertia::render('Public/Cart', [
             'cart' => [
                 'content' => $cartContent,
-                'total' => \Cart::getTotal(),
+                'total' => config('constants.currency') . ' ' . \Cart::getTotal(),
+                'quantity' => \Cart::getTotalQuantity()
             ]
         ]);
     }

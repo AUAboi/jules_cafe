@@ -41,8 +41,9 @@ const props = defineProps({
           </div>
         </template>
       </Dropdown>
-      <input class="relative w-full px-6 py-3 rounded-r focus:ring" autocomplete="off" type="text" name="search"
-        placeholder="Search…" @input="$emit('update:modelValue', $event.target.value)" :value="modelValue" />
+      <input class="relative w-full px-6 py-3 rounded-r focus:ring border-none" autocomplete="off" type="text"
+        name="search" placeholder="Search…" @input="$emit('update:modelValue', $event.target.value)"
+        :value="modelValue" />
     </div>
     <button class="ml-3 text-sm text-gray-500 hover:text-gray-700 focus:text-indigo-500" type="button"
       @click="$emit('reset')">

@@ -43,14 +43,15 @@ class Dish extends Model
             $query->whereHas('categories', function ($query) use ($category) {
                 $query->where('category_id', $category);
             });
-        })->when($filters['active'] ?? null, function ($query, $active) {
-            $query->active();
-        });
+        })->active($filters['active']);
     }
 
-    public function scopeActive($query)
+    public function scopeActive($query, $active)
     {
-        $query->where('active', 1);
+
+        if (!is_null($active)) {
+            $query->where('active', $active);
+        }
     }
 
     public function media()
