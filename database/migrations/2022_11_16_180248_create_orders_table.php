@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('order_no')->unique();
             $table->smallInteger('table_no')->nullable();
             $table->string('note')->nullable();

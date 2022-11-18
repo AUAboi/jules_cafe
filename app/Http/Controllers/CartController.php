@@ -14,8 +14,8 @@ class CartController extends Controller
     public function index()
     {
         \Cart::session(auth()->id());
-
         $row = \Cart::getContent();
+
         $cartContent = [];
         if ($row->count()) {
             // remove from cart if item doesnt exist anymore

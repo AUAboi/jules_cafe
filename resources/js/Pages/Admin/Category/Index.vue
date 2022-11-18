@@ -1,5 +1,4 @@
 <script setup>
-import Paginator from '@/Components/Paginator.vue';
 import PageTitle from '@/Components/UI/PageTitle.vue';
 import SearchBox from '@/Components/UI/SearchBox.vue';
 import { Inertia } from '@inertiajs/inertia';
@@ -7,6 +6,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import throttle from "lodash/throttle";
 import pickBy from "lodash/pickBy";
 import { reactive, watch } from 'vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
 
 
 
@@ -21,11 +21,13 @@ const props = defineProps({
 })
 
 const form = reactive({
-  search: props.filters.search
+  search: props.filters.search,
+  active: props.filters.active
 })
 
 const reset = () => {
   form.search = null;
+  form.active = null
 }
 
 watch(
@@ -51,11 +53,9 @@ watch(
 
   <div class="flex flex-col md:flex-row items-center justify-evenly my-8">
     <SearchBox class="w-full max-w-md my-4" v-model="form.search" filterable @reset="reset">
-      <div class="flex flex-col gap-4">
-        <Link as="p" :href="route('admin.category')" class="cursor-pointer">All</Link>
-        <Link as="p" :href="route('admin.category', { active: 1 })" class="cursor-pointer">Active</Link>
-        <Link as="p" :href="route('admin.category', { active: 0 })" class="cursor-pointer">Inactive</Link>
-      </div>
+      <DropdownLink as="p" :href="route('admin.category')" class="cursor-pointer">All</DropdownLink>
+      <DropdownLink as="p" :href="route('admin.category', { active: 1 })">Active</DropdownLink>
+      <DropdownLink as="p" :href="route('admin.category', { active: 0 })" class="cursor-pointer">Inactive</DropdownLink>
 
     </SearchBox>
     <Link :href="route('admin.category.create')" as="button" class="primary-btn h-fit">
@@ -72,7 +72,7 @@ watch(
       </div>
       <div class="flex justify-between items-center p-2">
         <Link :href="route('admin.category.edit', category.id)" as="button" class="primary-btn">Edit</Link>
-        <Link method="put" :href="route('admin.category.activate', category.id)" v-if="!category.active"
+        <Link method="put" as="span" :href="route('admin.category.activate', category.id)" v-if="!category.active"
           class="underline text-gray-900 text-sm">
         Activate?</Link>
       </div>

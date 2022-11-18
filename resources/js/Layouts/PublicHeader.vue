@@ -41,15 +41,22 @@ const props = defineProps({
       </span>
       </Link>
       <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 mb-2 sm:mb-0">
-        <Link v-if="$page.props.auth.user" :href="route('cart')" class="btn-order inline-flex font-sans items-center bg-yellow-200 border-0 py-1 px-2 focus:outline-none
+        <div class="flex gap-4" v-if="$page.props.auth.user">
+          <Link :href="route('cart')" class="btn-order inline-flex font-sans items-center bg-yellow-200 border-0 py-1 px-2 focus:outline-none
 				hover:bg-yellow-300 rounded text-base md:mt-0">
-        {{ $page.props.cart.total }} <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-          </path>
-        </svg>
-        </Link>
+          {{ $page.props.cart.total }} <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+            </path>
+          </svg>
+
+          </Link>
+          <Link as="button" method="post" :href="route('logout')">Logout</Link>
+
+        </div>
+
+
         <div class="flex gap-4 mb-4" v-else>
           <Link as="button" class="primary-btn" :href="route('register')">Register</Link>
           <Link as="button" class="secondary-btn" :href="route('login')">Login</Link>

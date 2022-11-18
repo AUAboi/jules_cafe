@@ -1,22 +1,27 @@
 <script setup>
-import { Link, Head } from "@inertiajs/inertia-vue3"
+import { Link, Head, useForm } from "@inertiajs/inertia-vue3"
+import { computed } from "@vue/reactivity";
 
 import CartItem from '@/Components/Cart/CartItem.vue';
-import { computed } from "@vue/reactivity";
 
 const props = defineProps({
   cart: Object
 })
 
-
 const hasCartItems = computed(() => {
   return Object.keys(props.cart.content).length
 });
+
+const form = useForm({
+  table_no: null
+})
 </script>
 
 <template>
 
   <Head title="View Cart"></Head>
+
+  {{ form }}
   <div v-if="hasCartItems">
     <div class="flex justify-evenly flex-wrap  my-10">
       <div class=" bg-white px-10 py-10">
@@ -46,12 +51,7 @@ const hasCartItems = computed(() => {
           <span class="font-semibold text-sm uppercase">{{ cart.quantity }} Items</span>
           <span class="font-semibold text-sm">{{ cart.total }}</span>
         </div>
-        <div>
-          <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
-          <select class="block p-2 text-gray-600 w-full text-sm">
-            <option>Standard shipping - $10.00</option>
-          </select>
-        </div>
+
         <div class="my-4">
           <div>
             <input id="takeaway" name="type" type="radio">
@@ -81,7 +81,7 @@ const hasCartItems = computed(() => {
 
     </div>
   </div>
-  <div class="text-4xl py-16 text-center">
+  <div v-else class="text-4xl py-16 text-center">
     <h1>Oops, it seems your cart is empty</h1>
   </div>
 

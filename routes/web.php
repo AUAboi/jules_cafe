@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -64,6 +65,10 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('admin.category.update');
 
     Route::delete('/category/{category}/delete', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+    //Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
 });
 
 

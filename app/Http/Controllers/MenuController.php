@@ -29,7 +29,9 @@ class MenuController extends Controller
 
         $categories = Category::where('active', 1)->get();
 
-        \Cart::session(auth()->id());
+        if (auth()->id()) {
+            \Cart::session(auth()->id());
+        }
 
         return Inertia::render('Public/Menu', [
             'dishes' => $dishes,

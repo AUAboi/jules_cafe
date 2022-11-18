@@ -4,7 +4,6 @@ const props = defineProps({
   cartDish: Object
 })
 
-
 const form = useForm({
   id: null
 })
@@ -43,7 +42,7 @@ const removeItem = (id) => {
       <div class="flex flex-col justify-between ml-4 flex-grow">
         <span class="font-bold text-sm">{{ cartDish.name }}</span>
         <span @click="removeItem(cartDish.id)"
-          class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</span>
+          class="font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer">Remove</span>
       </div>
     </div>
     <div class="flex justify-center w-1/5 items-center">
