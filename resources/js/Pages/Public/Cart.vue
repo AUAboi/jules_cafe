@@ -60,7 +60,7 @@ const submit = () => {
 
         <div class="my-4">
           <div>
-            <input @change="form.is_dine = !$event.target.checked" id="takeaway" name="type" type="radio"
+            <input @change="form.is_dine = !$event.target.checked" checked id="takeaway" name="type" type="radio"
               value="takeaway">
             <label for="takeaway" class="font-medium inline-block mb-3 text-sm uppercase px-2">Take away</label>
           </div>

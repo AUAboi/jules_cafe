@@ -16,6 +16,7 @@ class MenuSeeder extends Seeder
      */
     public function run()
     {
+
         Dish::factory(10)->create();
         Category::create([
             'name' => 'Hot Coffee'

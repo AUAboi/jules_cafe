@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Models\Order;
 use App\Models\SiteMeta;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,10 +39,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/remove-item', [CartController::class, 'removeItem'])->name('cart.removeitem');
     });
 
-    Route::prefix('/orders')->middleware(['shopisopen'])->group(function () {
+    Route::prefix('/orders')->group(function () {
         Route::get('/', [OrderController::class, 'publicView'])->name('orders');
+        Route::get('/{order}', [OrderController::class, 'showOrder'])->name('orders.show');
 
-        Route::post('/orders/create', [OrderController::class, 'store'])->name('orders.store');
+        Route::get('/placed/{order}', [OrderController::class, 'placed'])->name('orders.placed');
+
+
+        Route::post('/orders/create', [OrderController::class, 'store'])->middleware(['shopisopen'])->name('orders.store');
     });
 });
 
@@ -77,6 +82,7 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
 
+    Route::put('/orders/{order}/update', [OrderController::class, 'update'])->name('admin.orders.update');
 
     Route::post('/site/togglestatus', function () {
         $site  = SiteMeta::first();

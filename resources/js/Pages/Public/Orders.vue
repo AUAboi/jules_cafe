@@ -39,7 +39,10 @@ const labels = [
 
   <Head title="Orders"></Head>
   <div>
-    <DataTable :labels="labels" :table-data="orders.data" />
+    <div class="overflow-x-auto">
+      <DataTable :labels="labels" :table-data="orders.data" resource-route="orders.show" />
+
+    </div>
     <Paginator :links="orders.links" />
   </div>
 </template>

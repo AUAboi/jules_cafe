@@ -25,6 +25,8 @@ class CreateUserOrder
       $order->save();
 
       $addUserCartDishesToOrder->handle($user, $order);
+
+      \Cart::clear();
     });
   }
 }

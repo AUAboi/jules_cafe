@@ -25,6 +25,7 @@ class OrderController extends Controller
                 'total' => $order->total_price,
                 'type' => $order->order_type,
                 'user_name' => $order->user->name,
+                'phone' => $order->user->phone,
                 'created_at' => $order->created_at->diffForHumans(),
                 'slug' => $order->order_no,
                 'status' => $order->status
@@ -41,11 +42,17 @@ class OrderController extends Controller
 
         $dishes = $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => $dish->pivot->price,
+            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
             'quantity' => $dish->pivot->quantity,
         ]);
         return Inertia::render('Admin/Orders/Show', [
-            'order' => $order,
+            'order' => [
+                'order_no' => $order->order_no,
+                'status' => $order->status,
+                'created_at' => $order->created_at->format('Y/m/d H:i'),
+                'time' => $order->created_at->diffForHumans(),
+            ],
+            'user' => $order->user,
             'dishes' => $dishes
         ]);
     }
@@ -55,12 +62,57 @@ class OrderController extends Controller
         $request->validate([
             'is_dine' => 'boolean|required',
             'table_no' => 'required_if:is_dine,true',
-            'note' => 'string'
+            'note' => 'nullable|string'
         ]);
 
         $createUserOrder->handle(auth()->user(), $request->all('table_no', 'note'));
 
         return redirect()->route('home');
+    }
+
+    public function update(Order $order, Request $request)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,preparing,completed,cancelled'
+        ]);
+        $order->update(['status' => $request->status]);
+
+        return redirect()->back();
+    }
+
+    public function placed(Order $order)
+    {
+        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
+            'name' => $dish->name,
+            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
+            'quantity' => $dish->pivot->quantity,
+        ]);
+        return Inertia::render('Public/OrderPlaced', [
+            'order' => [
+                'order_no' => $order->order_no,
+                'status' => $order->status,
+                'table_no' => $order->table_no,
+                'total' =>  $order->total_price
+            ],
+            'dishes' => $dishes
+        ]);
+    }
+    public function showOrder(Order $order)
+    {
+        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
+            'name' => $dish->name,
+            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
+            'quantity' => $dish->pivot->quantity,
+        ]);
+        return Inertia::render('Public/Order', [
+            'order' => [
+                'order_no' => $order->order_no,
+                'status' => $order->status,
+                'table_no' => $order->table_no,
+                'total' => $order->total_price
+            ],
+            'dishes' => $dishes
+        ]);
     }
 
     public function publicView()
@@ -70,6 +122,7 @@ class OrderController extends Controller
             ->withQueryString()
             ->through(fn ($order) => [
                 'order_no' => $order->order_no,
+                'slug' => $order->order_no,
                 'total' => $order->total_price,
                 'type' => $order->order_type,
                 'created_at' => $order->created_at->diffForHumans(),

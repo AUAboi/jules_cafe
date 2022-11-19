@@ -15,8 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            SiteMetaSeeder::class,
             AdminSeeder::class,
-            MenuSeeder::class
+            MenuSeeder::class,
         ]);
     }
 }

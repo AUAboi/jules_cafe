@@ -47,7 +47,7 @@ class Order extends Model
         foreach ($dishes as $dish) {
             $total += $dish->pivot->price * $dish->pivot->quantity;
         }
-        return $total;
+        return config('constants.currency') . ' ' . $total;
     }
 
     public function user()

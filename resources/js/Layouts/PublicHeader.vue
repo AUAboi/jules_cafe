@@ -73,7 +73,7 @@ const props = defineProps({
               </template>
 
               <template #content>
-                <DropdownLink :href="route('logout')" method="post" as="button">
+                <DropdownLink :href="route('orders')" as="button">
                   View Orders
                 </DropdownLink>
                 <DropdownLink :href="route('logout')" method="post" as="button">
