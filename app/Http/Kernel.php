@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ShopIsOpen;
 use App\Http\Middleware\UserIsAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'isadmin' => UserIsAdmin::class
+        'isadmin' => UserIsAdmin::class,
+        'shopisopen' => ShopIsOpen::class
     ];
 }

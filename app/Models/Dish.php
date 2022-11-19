@@ -61,6 +61,6 @@ class Dish extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_dishes');
+        return $this->belongsToMany(Category::class, 'category_dishes')->using(DishOrder::class);
     }
 }

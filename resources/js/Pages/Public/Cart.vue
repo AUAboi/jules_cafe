@@ -13,14 +13,20 @@ const hasCartItems = computed(() => {
 });
 
 const form = useForm({
-  table_no: null
+  is_dine: false,
+  table_no: 1,
+  note: ''
 })
+
+const submit = () => {
+  form.post(route('orders.store'))
+}
+
 </script>
 
 <template>
 
   <Head title="View Cart"></Head>
-
   {{ form }}
   <div v-if="hasCartItems">
     <div class="flex justify-evenly flex-wrap  my-10">
@@ -54,27 +60,31 @@ const form = useForm({
 
         <div class="my-4">
           <div>
-            <input id="takeaway" name="type" type="radio">
+            <input @change="form.is_dine = !$event.target.checked" id="takeaway" name="type" type="radio"
+              value="takeaway">
             <label for="takeaway" class="font-medium inline-block mb-3 text-sm uppercase px-2">Take away</label>
-
           </div>
           <div>
-            <input id="dinein" name="type" type="radio">
+            <input @change="form.is_dine = $event.target.checked" id="dinein" name="type" type="radio" value="dinein">
             <label for="dinein" class="font-medium inline-block mb-3 text-sm uppercase px-2">Dine-in</label>
+          </div>
+          <div v-if="form.is_dine" class="my-4">
+            <select v-model="form.table_no">
+              <option v-for="num in 10" :value="num" :key="num">Table {{ num }}</option>
+            </select>
           </div>
 
         </div>
         <div class="flex flex-col gap-1 py-10">
           <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Special instructions</label>
-          <textarea name="note" id="note" cols="20" rows="5" class="resize-none"></textarea>
+          <textarea name="note" id="note" cols="20" rows="5" v-model="form.note" class="resize-none"></textarea>
         </div>
-        <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
             <span>{{ cart.total }}</span>
           </div>
-          <button
+          <button @click.prevent="submit"
             class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
         </div>
       </div>

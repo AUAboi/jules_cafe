@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('site_metas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('order_no')->nullable()->unique();
-            $table->smallInteger('table_no')->nullable();
-            $table->string('note')->nullable();
-            $table->enum('status', ['pending', 'preparing', 'completed', 'cancelled']);
+            $table->integer('tables')->nullable();
+            $table->boolean('is_closed')->default(false);
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('site_metas');
     }
 };

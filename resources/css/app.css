@@ -19,7 +19,7 @@
   focus:outline-none focus:border-gray-900 
   transition
   ease-in-out
-  duration-150;
+  duration-150 cursor-pointer;
 }
 
 .secondary-btn {

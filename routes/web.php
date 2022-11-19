@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Models\SiteMeta;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,19 +29,24 @@ Route::get('/category', [CategoryController::class, 'publicView'])->name('catego
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
-Route::prefix('/cart')->middleware(['auth'])->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('cart');
-    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/cart')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('cart');
+        Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+        Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
 
-    Route::post('/remove-item', [CartController::class, 'removeItem'])->name('cart.removeitem');
+        Route::post('/remove-item', [CartController::class, 'removeItem'])->name('cart.removeitem');
+    });
+
+    Route::prefix('/orders')->middleware(['shopisopen'])->group(function () {
+        Route::get('/', [OrderController::class, 'publicView'])->name('orders');
+
+        Route::post('/orders/create', [OrderController::class, 'store'])->name('orders.store');
+    });
 });
 
-
 Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('admin.dashboard');
 
 
     //Dish routes
@@ -54,7 +61,7 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
 
     Route::delete('/dish/{dish}/delete', [DishController::class, 'destroy'])->name('admin.dish.destroy');
 
-    // Category routes
+    //Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
 
     Route::get('/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
@@ -69,6 +76,12 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
     //Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+
+
+    Route::post('/site/togglestatus', function () {
+        $site  = SiteMeta::first();
+        $site->update(['is_closed' => !$site->is_closed]);
+    })->name('admin.site.togglestatus');
 });
 
 
