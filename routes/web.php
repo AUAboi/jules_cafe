@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -91,6 +92,12 @@ Route::prefix('/admin')->middleware(['auth', 'isadmin'])->group(function () {
         $site  = SiteMeta::first();
         $site->update(['is_closed' => !$site->is_closed]);
     })->name('admin.site.togglestatus');
+
+    //Users
+    Route::get('/users', [RegisteredUserController::class, 'index'])->name('admin.users');
+    Route::get('/users/{user}', [RegisteredUserController::class, 'show'])->name('admin.users.show');
+
+    Route::delete('/users/{user}', [RegisteredUserController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 

@@ -42,10 +42,10 @@ class Order extends Model
 
     public function getTotalPriceAttribute()
     {
-        $dishes = $this->dishes;
+        $dishes = DishOrder::where("order_id", $this->id)->get();
         $total = 0;
         foreach ($dishes as $dish) {
-            $total += $dish->pivot->price * $dish->pivot->quantity;
+            $total += $dish->price * $dish->quantity;
         }
         return config('constants.currency') . ' ' . $total;
     }

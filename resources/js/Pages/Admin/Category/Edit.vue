@@ -40,7 +40,9 @@ const submit = () => {
   form.post(route('admin.category.update', props.category.id))
 }
 const destroy = () => {
-  form.delete(route('admin.category.destroy', props.category.id))
+  if (confirm('Do you really want to delete'))
+
+    form.delete(route('admin.category.destroy', props.category.id))
 }
 
 const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];

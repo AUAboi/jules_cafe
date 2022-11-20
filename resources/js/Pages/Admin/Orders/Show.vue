@@ -45,11 +45,14 @@ watch(
       Order
     </p>
     <div class="flex flex-col gap-4  py-4 px-2 border-t">
-      <Link class="font-bold text-blue-500 underline">
+      <Link :href="route('admin.users.show', user.id)" class="font-bold text-blue-500 underline">
       Profile
       </Link>
       <p>
         Order by: {{ user.name }}
+      </p>
+      <p>
+        Total: {{ order.total }}
       </p>
       <p>
         Phone: {{ user.phone }}

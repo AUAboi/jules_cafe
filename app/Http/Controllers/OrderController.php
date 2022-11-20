@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateUserOrder;
 use App\Models\Dish;
+use App\Models\DishOrder;
 use App\Models\Order;
 use Carbon\Carbon;
 use DateTime;
@@ -18,6 +19,7 @@ class OrderController extends Controller
         $filters = $request->all('search', 'status');
         $orders = Order::with(['user'])->orderBy('created_at', 'DESC')
             ->filter($filters)
+            ->with(['dishes'])
             ->paginate(10)
             ->withQueryString()
             ->through(fn ($order) => [
@@ -40,15 +42,16 @@ class OrderController extends Controller
     public function show(Order $order)
     {
 
-        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
+        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
-            'quantity' => $dish->pivot->quantity,
+            'price' => config('constants.currency') . ' ' . $dish->price,
+            'quantity' => $dish->quantity,
         ]);
         return Inertia::render('Admin/Orders/Show', [
             'order' => [
                 'order_no' => $order->order_no,
                 'status' => $order->status,
+                'total' => $order->total_price,
                 'created_at' => $order->created_at->format('Y/m/d H:i'),
                 'time' => $order->created_at->diffForHumans(),
             ],
@@ -86,10 +89,10 @@ class OrderController extends Controller
 
     public function placed(Order $order)
     {
-        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
+        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
-            'quantity' => $dish->pivot->quantity,
+            'price' => config('constants.currency') . ' ' . $dish->price,
+            'quantity' => $dish->quantity,
         ]);
         return Inertia::render('Public/OrderPlaced', [
             'order' => [
@@ -103,10 +106,10 @@ class OrderController extends Controller
     }
     public function showOrder(Order $order)
     {
-        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
+        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->pivot->price,
-            'quantity' => $dish->pivot->quantity,
+            'price' => config('constants.currency') . ' ' . $dish->price,
+            'quantity' => $dish->quantity,
         ]);
         return Inertia::render('Public/Order', [
             'order' => [

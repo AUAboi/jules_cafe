@@ -11,10 +11,53 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class RegisteredUserController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $users = User::orderBy('created_at', 'DESC')
+            ->filter($filters)
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn ($user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'last_order' => '#' . $user->orders()->first()->order_no,
+                'created_at' => $user->created_at->format('Y/m/d')
+            ]);
+
+        return Inertia::render('Admin/User/Index', [
+            'filters' => $filters,
+            'users' => $users
+        ]);
+    }
+
+    public function show(User $user)
+    {
+        return Inertia::render('Admin/User/Show', [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'created_at' => $user->created_at->format('Y/m/d')
+            ]
+        ]);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('admin.users');
+    }
+
     /**
      * Display the registration view.
      *

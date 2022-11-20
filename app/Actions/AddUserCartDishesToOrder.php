@@ -15,14 +15,13 @@ class AddUserCartDishesToOrder
     \Cart::session($user->id);
 
     $cart = \Cart::getContent();
-
     foreach ($cart as $key => $item) {
       $dish = Dish::find($item->id);
       if (!$dish) {
         \Cart::remove($item->id);
         unset($row[$key]);
       }
-      $order->dishes()->attach($item->id, ['quantity' => $item->quantity, 'price' => $item->price]);
+      $order->dishes()->attach($item->id, ['quantity' => $item->quantity, 'price' => $item->price, 'name' => $item->name,]);
     }
   }
 }

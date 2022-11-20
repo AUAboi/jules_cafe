@@ -13,6 +13,7 @@ class CategoryDish extends Model
 
     protected $fillable = [
         'dish_id',
-        'category_id'
+        'category_id',
+
     ];
 }

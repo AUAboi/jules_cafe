@@ -10,10 +10,13 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class DishOrder extends Pivot
 {
     use HasFactory;
+
+    protected $table = "dish_orders";
     protected $fillable = [
-        'user_id',
+        'dish_id',
         'order_id',
         'price',
+        'name',
         'quantity'
     ];
     protected function price(): Attribute
