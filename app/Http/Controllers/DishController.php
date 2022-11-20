@@ -47,8 +47,8 @@ class DishController extends Controller
     {
         $request->validate([
             'name' => 'string|required',
-            'price' => 'integer|required|min:1',
-            'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png',
+            'price' => 'numeric|required|min:1',
+            'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png,image/webp',
             'active' => 'boolean'
         ]);
 
@@ -100,8 +100,8 @@ class DishController extends Controller
     {
         $request->validate([
             'name' => 'string|required',
-            'price' => 'integer|required|min:1',
-            'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png',
+            'price' => 'numeric|required|min:1',
+            'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png,image/webp',
             'active' => 'boolean'
         ]);
 

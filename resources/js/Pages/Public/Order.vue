@@ -1,4 +1,6 @@
 <script setup>
+import { Head } from '@inertiajs/inertia-vue3';
+
 const props = defineProps({
   order: Object,
   dishes: Array
@@ -6,6 +8,8 @@ const props = defineProps({
 </script>
 
 <template>
+
+  <Head :title="order.order_no"></Head>
   <div class="p-4 sm:p-6 max-w-2xl mx-auto">
     <div class="mt-6 flex justify-between items-center">
       <h4 class="text-xl sm:text-3xl">Order Number: #{{ order.order_no }}</h4>

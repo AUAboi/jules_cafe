@@ -21,7 +21,7 @@ const submit = () => {
   form.post(route('admin.dish.store'))
 }
 
-const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
+const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
 
 const handleSelectedMedia = (files) => {
   Array.from(files).forEach((file) => {
@@ -46,7 +46,7 @@ const handleSelectedMedia = (files) => {
   <form enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
     <div class="flex">
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
-      <FormInputText label="Price" v-model="form.price" :error="form.errors.price" type="number" />
+      <FormInputText step=".01" label="Price" v-model="form.price" :error="form.errors.price" type="number" />
     </div>
     <div>
       <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />

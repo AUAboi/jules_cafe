@@ -45,7 +45,7 @@ const destroy = () => {
     form.delete(route('admin.category.destroy', props.category.id))
 }
 
-const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
+const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
 
 const handleSelectedMedia = (files) => {
   Array.from(files).forEach((file) => {
@@ -71,7 +71,7 @@ onMounted(setFormValues)
   <h2 v-else class="text-center text-2xl my-10">No image associated with this category.</h2>
   <form id="edit-form" enctype="multipart/form-data" class="max-w-md mx-auto mt-10" @submit.prevent="submit">
     <div class="flex">
-      <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
+      <FormInputText style="width: 100%;" label="Name" v-model="form.name" :error="form.errors.name" />
     </div>
     <div>
       <FormInputImage label="Category Image" @selected="handleSelectedMedia" :error="form.errors.image" />

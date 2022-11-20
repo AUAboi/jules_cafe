@@ -21,7 +21,7 @@ const submit = () => {
   form.post(route('admin.category.store'))
 }
 
-const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png"];
+const allowedMediaTypes = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
 
 const handleSelectedMedia = (files) => {
   Array.from(files).forEach((file) => {

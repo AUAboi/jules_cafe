@@ -41,6 +41,20 @@ class RegisteredUserController extends Controller
 
     public function show(User $user)
     {
+        $orders = $user->orders()->orderBy('created_at', 'DESC')
+            ->with(['dishes'])
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn ($order) => [
+                'order_no' => $order->order_no,
+                'total' => $order->total_price,
+                'type' => $order->order_type,
+                'user_name' => $order->user->name,
+                'phone' => $order->user->phone,
+                'created_at' => $order->created_at->diffForHumans(),
+                'slug' => $order->order_no,
+                'status' => $order->status
+            ]);
         return Inertia::render('Admin/User/Show', [
             'user' => [
                 'id' => $user->id,
@@ -48,7 +62,8 @@ class RegisteredUserController extends Controller
                 'phone' => $user->phone,
                 'email' => $user->email,
                 'created_at' => $user->created_at->format('Y/m/d')
-            ]
+            ],
+            'orders' => $orders
         ]);
     }
 
