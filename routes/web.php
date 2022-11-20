@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SiteClosedController;
@@ -24,9 +25,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Public/Home');
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/category', [CategoryController::class, 'publicView'])->name('category');
 

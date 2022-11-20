@@ -1,4 +1,6 @@
 <script setup>
+import { Head } from '@inertiajs/inertia-vue3';
+
 const props = defineProps({
   order: Object,
   dishes: Array
@@ -6,6 +8,8 @@ const props = defineProps({
 </script>
 
 <template>
+
+  <Head title="Order Placed"></Head>
   <div class="p-4 sm:p-6 max-w-2xl mx-auto">
     <h1 class="text-4xl text-center my-4">Order Placed succesfully</h1>
     <div class="mt-6 flex justify-between items-center">

@@ -1,4 +1,5 @@
 <script setup>
+import Paginator from '@/Components/Paginator.vue';
 import DataTable from '@/Components/Table/DataTable.vue';
 import SearchBox from '@/Components/UI/SearchBox.vue';
 import { Inertia } from '@inertiajs/inertia';
@@ -63,7 +64,6 @@ const labels = [
 
 
 <template>
-  {{ users }}
 
   <Head title="Users"></Head>
   <div class="container mx-auto my-6">
@@ -72,6 +72,8 @@ const labels = [
     <div class="bg-white rounded-md shadow overflow-x-auto max-w-5xl">
       <DataTable :table-data="users.data" :labels="labels" resource-route="admin.users.show" />
     </div>
+    <Paginator :links="users.links" />
+
   </div>
 
 </template>

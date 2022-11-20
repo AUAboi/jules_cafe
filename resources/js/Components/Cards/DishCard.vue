@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
   <div class="bg-white rounded-t-xl w-60">
-    <img class="w-full h-56 rounded-t-xl" :src="dish.image ?? '/storage/site_images/samplefood.jpg'"
+    <img class="w-full h-56 rounded-t-xl" :src="dish.image ?? '/site_images/samplefood.jpg'"
       :alt="dish.name + ' image'">
     <div class="p-2 ">
       <div class="flex justify-between py-2 font-bold">

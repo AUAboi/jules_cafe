@@ -7,6 +7,7 @@ import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+
 import PublicLayout from "@/Layouts/PublicLayout.vue"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 

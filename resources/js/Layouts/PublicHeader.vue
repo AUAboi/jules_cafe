@@ -39,7 +39,7 @@ const props = defineProps({
       <Link href="/"
         class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-2 md:mb-0">
       <span class="ml-3 text-2xl md:text-3xl title mt-2 w-36 z-10">
-        <img src="/storage/site_images/logo.jpg" alt="site logo">
+        <img src="/site_images/logo.jpg" alt="site logo">
       </span>
       </Link>
       <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 mb-2 sm:mb-0">

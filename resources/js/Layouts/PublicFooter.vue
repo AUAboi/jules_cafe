@@ -1,7 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/inertia-vue3';
-import axios from 'axios';
-import { reactive } from 'vue';
+
 
 
 const props = defineProps({
@@ -27,7 +26,12 @@ const props = defineProps({
             Menu
             </Link>
           </nav>
+          <div>
+            <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">Contact</h2>
+            <a class="text-gray-400 hover:text-white" href="tel:0164743200">0164743200</a>
+          </div>
         </div>
+
 
         <div class="lg:w-1/4 md:w-1/2 w-full px-2">
           <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">SUBSCRIBE</h2>

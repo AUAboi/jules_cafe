@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'phone' => $user->phone,
-                'last_order' => '#' . $user->orders()->first()->order_no,
+                'last_order' =>  $user->orders()->count() ? '#' . $user->orders()->latest()->first()->order_no : null,
                 'created_at' => $user->created_at->format('Y/m/d')
             ]);
 

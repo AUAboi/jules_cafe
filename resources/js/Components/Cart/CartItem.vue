@@ -37,7 +37,7 @@ const removeItem = (id) => {
   <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
     <div class="flex sm:w-2/5">
       <div>
-        <img class="h-14 w-24 sm:w-36 sm:h-24" :src="cartDish.image ?? '/storage/site_images/samplefood.jpg'">
+        <img class="h-14 w-24 sm:w-36 sm:h-24" :src="cartDish.image ?? '/site_images/samplefood.jpg'">
       </div>
       <div class="flex flex-col justify-between ml-4 flex-grow">
         <span class="font-bold text-sm">{{ cartDish.name }}</span>

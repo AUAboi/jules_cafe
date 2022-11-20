@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
   <div class="card">
-    <div :style="{ backgroundImage: `url(${category.image ? category.image : '/storage/site_images/samplefood.jpg'})` }"
+    <div :style="{ backgroundImage: `url(${category.image ? category.image : '/site_images/samplefood.jpg'})` }"
       class="bg-image relative w-56 h-56 flex justify-center items-center bg-cover bg-center">
       <div class="overlay "></div>
       <h2 class="text-2xl text-white z-20 opacity-0">{{ category.name }}</h2>
