@@ -20,6 +20,6 @@ class ShopIsOpen
         $site = SiteMeta::first();
 
         if (!$site->is_closed) return $next($request);
-        return redirect()->route('home');
+        return redirect()->route('closed');
     }
 }

@@ -11,7 +11,7 @@ class CreateUserOrder
 
   public function handle(User $user, array $data)
   {
-    DB::transaction(function () use ($user, $data) {
+    $order = DB::transaction(function () use ($user, $data) {
       $order = $user->orders()->create([
         'table_no' => $data['table_no'],
         'note' => $data['note'],
@@ -27,6 +27,10 @@ class CreateUserOrder
       $addUserCartDishesToOrder->handle($user, $order);
 
       \Cart::clear();
+
+      return $order;
     });
+
+    return $order;
   }
 }

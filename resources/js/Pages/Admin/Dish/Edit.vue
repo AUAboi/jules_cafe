@@ -12,7 +12,9 @@ const props = defineProps({
   dish: {
     required: true,
     type: Object
-  }
+  },
+  category_dishes: Array,
+  categories: Array
 })
 
 
@@ -32,7 +34,8 @@ const form = useForm({
   name: props.dish.name,
   price: props.dish.price,
   image: null,
-  active: props.dish.active
+  active: props.dish.active,
+  categories: props.categories
 })
 
 
@@ -89,5 +92,38 @@ onMounted(setFormValues)
       </form>
     </div>
   </form>
+  <div class="py-4">
+    <h1 class="max-w-3xl mx-auto mt-10 font-bold text-2xl">Dish Categories</h1>
+    <div class="bg-white rounded-md shadow overflow-x-auto  max-w-3xl mx-auto">
+      <table class="w-full whitespace-nowrap">
+        <tr class="text-left font-bold">
+          <th class="px-6 pt-6 pb-4">Name</th>
+          <th class="px-6 pt-6 pb-4"></th>
+        </tr>
+        <tr v-for="category in categories" :key="category.id"
+          @click="category.belongs_to_program = !category.belongs_to_program"
+          class="hover:bg-gray-100 focus-within:bg-gray-100">
+          <td class="border-t">
+            <label for="course" class="px-6 py-4 flex items-center focus:text-indigo-500">
+              {{ category.name }}
+            </label>
+          </td>
+
+
+          <td class="border-t w-px">
+            <span class="px-4 flex items-center" tabindex="-1">
+              <input name="course" type="checkbox" v-model="category.belongs_to_program" />
+            </span>
+          </td>
+        </tr>
+        <tr v-if="categories.length === 0">
+          <td class="border-t px-6 py-4" colspan="4">
+            No category found.
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
 </template>
+

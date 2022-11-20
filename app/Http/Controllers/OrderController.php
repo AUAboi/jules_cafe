@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filters = $request->all('search', 'status');
-        $orders = Order::with(['user'])->orderBy('created_at')
+        $orders = Order::with(['user'])->orderBy('created_at', 'DESC')
             ->filter($filters)
             ->paginate(10)
             ->withQueryString()
@@ -65,9 +65,13 @@ class OrderController extends Controller
             'note' => 'nullable|string'
         ]);
 
-        $createUserOrder->handle(auth()->user(), $request->all('table_no', 'note'));
+        if (!$request->is_dine) {
+            $request->merge(['table_no' => null]);
+        }
 
-        return redirect()->route('home');
+        $order = $createUserOrder->handle(auth()->user(), $request->all('table_no', 'note'));
+
+        return redirect()->route('orders.placed', $order->order_no);
     }
 
     public function update(Order $order, Request $request)
@@ -117,7 +121,7 @@ class OrderController extends Controller
 
     public function publicView()
     {
-        $orders = auth()->user()->orders()->orderBy('created_at')
+        $orders = auth()->user()->orders()->orderBy('created_at', 'DESC')
             ->paginate(10)
             ->withQueryString()
             ->through(fn ($order) => [

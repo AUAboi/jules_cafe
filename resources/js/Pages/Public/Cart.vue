@@ -27,7 +27,6 @@ const submit = () => {
 <template>
 
   <Head title="View Cart"></Head>
-  {{ form }}
   <div v-if="hasCartItems">
     <div class="flex justify-evenly flex-wrap  my-10">
       <div class=" bg-white px-10 py-10">
@@ -85,7 +84,8 @@ const submit = () => {
             <span>{{ cart.total }}</span>
           </div>
           <button @click.prevent="submit"
-            class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+            class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Place
+            order</button>
         </div>
       </div>
 

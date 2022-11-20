@@ -30,11 +30,9 @@ watch(
 </script>
 
 <template>
-  {{ form }}
-  {{ order }}
   <PageTitle>Order # {{ order.order_no }}</PageTitle>
   <div class="bg-white shadow mt-4 max-w-lg mx-auto rounded-md flex items-center px-2 py-2 gap-4">
-    <p>Status</p>
+    <p class="font-bold">Status</p>
     <select class="form-select px-6 pb-8 w-full lg:w-1/2" v-model="form.status">
       <option value="pending">Pending</option>
       <option value="preparing">Preparing</option>

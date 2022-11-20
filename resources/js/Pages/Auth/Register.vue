@@ -26,7 +26,7 @@ const submit = () => {
     <GuestLayout>
 
         <Head title="Register" />
-
+        <h1 class="py-4">You need an account to be able to place order</h1>
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />

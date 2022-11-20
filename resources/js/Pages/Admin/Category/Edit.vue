@@ -7,6 +7,7 @@ import FormInputImage from '@/Components/form/FormInputImage.vue';
 import AppButton from '@/Components/UI/AppButton.vue';
 import SwitchButton from '@/Components/UI/SwitchButton.vue';
 import { onMounted } from 'vue';
+import DataTable from '@/Components/Table/DataTable.vue';
 
 const props = defineProps({
   category: {
@@ -87,5 +88,4 @@ onMounted(setFormValues)
       </form>
     </div>
   </form>
-
 </template>

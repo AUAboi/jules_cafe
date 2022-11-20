@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SiteClosedController;
 use App\Models\Order;
 use App\Models\SiteMeta;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,8 @@ Route::get('/', function () {
 Route::get('/category', [CategoryController::class, 'publicView'])->name('category');
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
+Route::get('/we-are-closed', SiteClosedController::class)->name('closed');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/cart')->group(function () {

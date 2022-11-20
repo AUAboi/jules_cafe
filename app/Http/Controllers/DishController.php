@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SyncCategoryDishes;
+use App\Models\Category;
 use App\Models\Dish;
 use App\Models\DishMedia;
 use Illuminate\Http\Request;
@@ -71,6 +73,16 @@ class DishController extends Controller
 
     public function edit(Dish $dish)
     {
+        $category_dishes = $dish->categories()->get();
+        $categories =  Category::orderBy('name')
+            ->get()
+            ->transform(fn ($category) => [
+                'id' => $category->id,
+                'name' => $category->name,
+
+                'belongs_to_program' => $category_dishes->contains($category->id),
+            ]);
+
         return Inertia::render('Admin/Dish/Edit', [
             'dish' => [
                 'id' => $dish->id,
@@ -78,11 +90,13 @@ class DishController extends Controller
                 'price' => $dish->price,
                 'active' => $dish->active,
                 'image' => $dish->media ? $dish->media->baseMedia->getUrl() : null,
-            ]
+            ],
+            'categories' => $categories,
+            'category_dishes' => $category_dishes
         ]);
     }
 
-    public function update(Request $request, Dish $dish)
+    public function update(Request $request, Dish $dish, SyncCategoryDishes $syncCategoryDishes)
     {
         $request->validate([
             'name' => 'string|required',
@@ -96,6 +110,7 @@ class DishController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'active' => $request->active,
+                'categories' => 'required|array|min:1',
             ]);
 
 
@@ -111,6 +126,8 @@ class DishController extends Controller
             }
         });
 
+
+        $syncCategoryDishes->handle($dish, $request->categories);
         return Redirect::route('admin.dish')->with('success', 'Dish edited succesfully.');
     }
 
