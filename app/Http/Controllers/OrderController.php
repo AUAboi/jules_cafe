@@ -8,6 +8,7 @@ use App\Models\DishOrder;
 use App\Models\Order;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -42,7 +43,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
 
-        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
+        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
             'price' => config('constants.currency') . ' ' . $dish->price,
             'quantity' => $dish->quantity,
@@ -72,7 +73,11 @@ class OrderController extends Controller
             $request->merge(['table_no' => null]);
         }
 
-        $order = $createUserOrder->handle(auth()->user(), $request->all('table_no', 'note'));
+        try {
+            $order = $createUserOrder->handle(auth()->user(), $request->all('table_no', 'note'));
+        } catch (ModelNotFoundException $th) {
+            return redirect()->back();
+        }
 
         return redirect()->route('orders.placed', $order->order_no);
     }
@@ -89,7 +94,7 @@ class OrderController extends Controller
 
     public function placed(Order $order)
     {
-        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
+        $dishes = $order->dishes()->transform(fn ($dish) => [
             'name' => $dish->name,
             'price' => config('constants.currency') . ' ' . $dish->price,
             'quantity' => $dish->quantity,
@@ -106,7 +111,7 @@ class OrderController extends Controller
     }
     public function showOrder(Order $order)
     {
-        $dishes = DishOrder::where('order_id', $order->id)->get()->transform(fn ($dish) => [
+        $dishes =  $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
             'price' => config('constants.currency') . ' ' . $dish->price,
             'quantity' => $dish->quantity,

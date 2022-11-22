@@ -13,7 +13,6 @@ class DishOrder extends Pivot
 
     protected $table = "dish_orders";
     protected $fillable = [
-        'dish_id',
         'order_id',
         'price',
         'name',
