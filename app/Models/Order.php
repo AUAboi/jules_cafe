@@ -42,7 +42,7 @@ class Order extends Model
 
     public function getTotalPriceAttribute()
     {
-        $dishes = DishOrder::where("order_id", $this->id)->get();
+        $dishes = $this->dishes;
         $total = 0;
         foreach ($dishes as $dish) {
             $total += $dish->price * $dish->quantity;

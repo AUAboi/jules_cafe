@@ -45,7 +45,7 @@ class OrderController extends Controller
 
         $dishes = $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->price,
+            'price' => $dish->formatted_price,
             'quantity' => $dish->quantity,
         ]);
         return Inertia::render('Admin/Orders/Show', [
@@ -94,11 +94,12 @@ class OrderController extends Controller
 
     public function placed(Order $order)
     {
-        $dishes = $order->dishes()->transform(fn ($dish) => [
+        $dishes = $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->price,
+            'price' => $dish->formatted_price,
             'quantity' => $dish->quantity,
         ]);
+
         return Inertia::render('Public/OrderPlaced', [
             'order' => [
                 'order_no' => $order->order_no,
@@ -113,7 +114,7 @@ class OrderController extends Controller
     {
         $dishes =  $order->dishes()->get()->transform(fn ($dish) => [
             'name' => $dish->name,
-            'price' => config('constants.currency') . ' ' . $dish->price,
+            'price' => $dish->formatted_price,
             'quantity' => $dish->quantity,
         ]);
         return Inertia::render('Public/Order', [
