@@ -8,6 +8,7 @@ use App\Http\Controllers\DishController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PublicOrderController;
 use App\Http\Controllers\SiteClosedController;
 use App\Models\Order;
 use App\Models\SiteMeta;
@@ -33,6 +34,10 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 Route::get('/we-are-closed', SiteClosedController::class)->name('closed');
 
+Route::get('/test', function () {
+    dd(auth()->user()->notifications->toArray());
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/cart')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('cart');
@@ -43,13 +48,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('/orders')->group(function () {
-        Route::get('/', [OrderController::class, 'publicView'])->name('orders');
-        Route::get('/{order}', [OrderController::class, 'showOrder'])->name('orders.show');
+        Route::get('/', [PublicOrderController::class, 'publicView'])->name('orders');
+        Route::get('/{order}', [PublicOrderController::class, 'showOrder'])->name('orders.show');
 
-        Route::get('/placed/{order}', [OrderController::class, 'placed'])->name('orders.placed');
+        Route::get('/placed/{order}', [PublicOrderController::class, 'placed'])->name('orders.placed');
 
 
-        Route::post('/orders/create', [OrderController::class, 'store'])->middleware(['shopisopen'])->name('orders.store');
+        Route::post('/orders/create', [PublicOrderController::class, 'store'])->middleware(['shopisopen'])->name('orders.store');
     });
 });
 

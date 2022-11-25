@@ -22,6 +22,7 @@ class RegisteredUserController extends Controller
         $filters = $request->all('search');
 
         $users = User::orderBy('created_at', 'DESC')
+            ->with(['orders'])
             ->filter($filters)
             ->paginate(10)
             ->withQueryString()
@@ -29,7 +30,7 @@ class RegisteredUserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'phone' => $user->phone,
-                'last_order' =>  $user->orders()->count() ? '#' . $user->orders()->latest()->first()->order_no : null,
+                'last_order' =>  $user->orders->count() ? '#' . $user->orders()->latest()->first()->order_no : null,
                 'created_at' => $user->created_at->format('Y/m/d')
             ]);
 
@@ -49,8 +50,8 @@ class RegisteredUserController extends Controller
                 'order_no' => $order->order_no,
                 'total' => $order->total_price,
                 'type' => $order->order_type,
-                'user_name' => $order->user->name,
-                'phone' => $order->user->phone,
+                'user_name' => $user->name,
+                'phone' => $user->phone,
                 'created_at' => $order->created_at->diffForHumans(),
                 'slug' => $order->order_no,
                 'status' => $order->status

@@ -43,7 +43,7 @@ class CartController extends Controller
         return Inertia::render('Public/Cart', [
             'cart' => [
                 'content' => $cartContent,
-                'total' => config('constants.currency') . ' ' . \Cart::getTotal(),
+                'total' => money(\Cart::getTotal(), 'MYR', true)->formatWithoutZeroes(),
                 'quantity' => \Cart::getTotalQuantity()
             ]
         ]);

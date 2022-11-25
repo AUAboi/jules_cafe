@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\OrderPlaced;
 use Illuminate\Support\Facades\DB;
 
 class CreateUserOrder
@@ -26,11 +27,13 @@ class CreateUserOrder
 
       $addUserCartDishesToOrder->handle($user, $order);
 
+
       \Cart::clear();
 
       return $order;
     });
 
+    $user->notify(new OrderPlaced($order));
     return $order;
   }
 }

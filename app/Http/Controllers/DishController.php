@@ -18,6 +18,7 @@ class DishController extends Controller
         $filters = $request->all('search', 'active');
         $dishes = Dish::orderBy('name')
             ->filter($filters)
+            ->with(['media'])
             ->paginate(9)
             ->withQueryString()
             ->through(fn ($dish) => [

@@ -14,8 +14,8 @@ class MenuController extends Controller
         $filters = $request->all('search', 'category');
 
         $dishes = Dish::orderBy("name")
-
             ->filter(array_merge($filters, ['active' => 1]))
+            ->with(['categories', 'media'])
             ->paginate(9)
             ->withQueryString()
             ->through(fn ($dish) => [
@@ -38,7 +38,7 @@ class MenuController extends Controller
             'categories' => $categories,
             'cart' => [
                 'content' => \Cart::getContent()->toArray(),
-                'total' => config('constants.currency') . ' ' . \Cart::getTotal()
+                'total' => money(\Cart::getTotal(), 'MYR', true)->formatWithoutZeroes()
             ]
 
         ]);

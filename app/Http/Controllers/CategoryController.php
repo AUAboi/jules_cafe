@@ -16,6 +16,7 @@ class CategoryController extends Controller
 
         $categories = Category::orderBy("name")
             ->filter($filters)
+            ->with(['media'])
             ->get()
             ->transform(fn ($category) => [
                 'id' => $category->id,
@@ -131,6 +132,7 @@ class CategoryController extends Controller
                 'name' => $category->name,
                 'image' => $category->media ? $category->media->baseMedia->getUrl() : null,
             ]);
+
         return Inertia::render('Public/Category', [
             'categories' => $categories
         ]);
