@@ -32,6 +32,7 @@ class CartController extends Controller
                 'id' => $item->id,
                 'name' => $item->associatedModel->name,
                 'price' => $item->associatedModel->formatted_price,
+                'ingredients' => $item->associatedModel->ingredients,
                 'quantity' => $item->quantity,
                 'total_price' => config('constants.currency') . ' ' . $item->associatedModel->price * $item->quantity,
                 'image' => $item->associatedModel->media ? $item->associatedModel->media->baseMedia->getUrl() : null,

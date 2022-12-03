@@ -21,6 +21,7 @@ class MenuController extends Controller
             ->through(fn ($dish) => [
                 'id' => $dish->id,
                 'name' => $dish->name,
+                'ingredients' => $dish->ingredients,
                 'price' => $dish->formatted_price,
                 'image' => $dish->media ? $dish->media->baseMedia->getUrl() : null,
                 'category' => $dish->categories
@@ -29,16 +30,14 @@ class MenuController extends Controller
 
         $categories = Category::where('active', 1)->get();
 
-        if (auth()->id()) {
-            \Cart::session(auth()->id());
-        }
 
         return Inertia::render('Public/Menu', [
             'dishes' => $dishes,
             'categories' => $categories,
             'cart' => [
                 'content' => \Cart::getContent()->toArray(),
-                'total' => money(\Cart::getTotal(), 'MYR', true)->formatWithoutZeroes()
+                'total' => $request->user() ? money(\Cart::session($request->user()->id)->getTotal(), 'MYR', true)
+                    ->formatWithoutZeroes() : null,
             ]
 
         ]);

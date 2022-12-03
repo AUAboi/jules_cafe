@@ -10,6 +10,8 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
+        $request->user()->unreadNotifications->markAsRead();
+
         $filters = $request->all('search', 'status');
         $orders = Order::with(['user'])->orderBy('created_at', 'DESC')
             ->filter($filters)
@@ -29,7 +31,7 @@ class OrderController extends Controller
 
         return Inertia::render('Admin/Orders/Index', [
             'orders' => $orders,
-            'filters' => $filters
+            'filters' => $filters,
         ]);
     }
 

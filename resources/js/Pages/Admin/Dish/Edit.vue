@@ -35,8 +35,10 @@ const form = useForm({
   price: props.dish.price,
   image: null,
   active: props.dish.active,
-  categories: props.categories
+  categories: props.categories,
+  ingredients: props.dish.ingredients
 })
+
 
 
 const submit = () => {
@@ -59,6 +61,7 @@ const handleSelectedMedia = (files) => {
   });
 };
 const setFormValues = async () => {
+
   form.image = await urlToImageFile(props.dish.image)
 }
 onMounted(setFormValues)
@@ -76,10 +79,13 @@ onMounted(setFormValues)
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
       <FormInputText label="Price" step=".01" v-model="form.price" :error="form.errors.price" type="number" />
     </div>
+    <div class="flex">
+      <FormInputText style="width: 100%;" label="Ingredients (Use commas to separate)" v-model="form.ingredients"
+        :error="form.errors.ingredients" />
+    </div>
     <div>
       <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />
       <SwitchButton class="my-4" v-model="form.active" label="Activate" />
-
     </div>
     <div class="flex justify-between">
       <AppButton form="edit-form" class="mb-4 px-10" type="submit">
@@ -109,8 +115,6 @@ onMounted(setFormValues)
               {{ category.name }}
             </label>
           </td>
-
-
           <td class="border-t w-px">
             <span class="px-4 flex items-center" tabindex="-1">
               <input name="course" type="checkbox" v-model="category.belongs_to_program" />

@@ -35,19 +35,6 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-
-
-
-        if ($request->user()) {
-            \Cart::session($request->user()->id);
-            $cart = [
-                'total' => money(\Cart::getTotal(), 'MYR', true)->formatWithoutZeroes()
-            ];
-        } else {
-            $cart = ['total' => null];
-        }
-
-
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -61,7 +48,7 @@ class HandleInertiaRequests extends Middleware
             },
             'notifications' => $request->user()->unreadNotifications ?? null,
             'cart' => [
-                'total' => $request->user ? money(\Cart::session($request->user()->id)->getTotal(), 'MYR', true)
+                'total' => $request->user() ? money(\Cart::session($request->user()->id)->getTotal(), 'MYR', true)
                     ->formatWithoutZeroes() : null,
             ],
         ]);

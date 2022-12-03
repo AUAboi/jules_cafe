@@ -26,6 +26,7 @@ class DishController extends Controller
                 'name' => $dish->name,
                 'price' => $dish->formatted_price,
                 'active' => $dish->active,
+                'ingredients' => $dish->ingredients,
                 'image' => $dish->media ? $dish->media->baseMedia->getUrl() : null,
             ]);
 
@@ -50,14 +51,16 @@ class DishController extends Controller
             'name' => 'string|required',
             'price' => 'numeric|required|min:1',
             'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png,image/webp',
-            'active' => 'boolean'
+            'active' => 'boolean',
+            'ingredients' => 'string|nullable'
         ]);
 
         DB::transaction(function () use ($request) {
             $dish = Dish::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'active' => $request->active
+                'active' => $request->active,
+                'ingredients' => $request->ingredients
             ]);
 
             if ($request->hasFile('image')) {
@@ -80,7 +83,6 @@ class DishController extends Controller
             ->transform(fn ($category) => [
                 'id' => $category->id,
                 'name' => $category->name,
-
                 'belongs_to_program' => $category_dishes->contains($category->id),
             ]);
 
@@ -90,6 +92,7 @@ class DishController extends Controller
                 'name' => $dish->name,
                 'price' => $dish->price,
                 'active' => $dish->active,
+                'ingredients' => $dish->ingredients,
                 'image' => $dish->media ? $dish->media->baseMedia->getUrl() : null,
             ],
             'categories' => $categories,
@@ -103,15 +106,18 @@ class DishController extends Controller
             'name' => 'string|required',
             'price' => 'numeric|required|min:1',
             'image' => 'file|nullable|max:8000|mimetypes:image/jpg,image/jpeg,image/png,image/webp',
-            'active' => 'boolean'
+            'active' => 'boolean',
+            'categories' => 'required|array|min:1',
+            'ingredients' => 'string|nullable'
         ]);
+
 
         DB::transaction(function () use ($request, $dish) {
             $dish->update([
                 'name' => $request->name,
                 'price' => $request->price,
                 'active' => $request->active,
-                'categories' => 'required|array|min:1',
+                'ingredients' => $request->ingredients
             ]);
 
 

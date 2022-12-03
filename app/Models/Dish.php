@@ -15,6 +15,7 @@ class Dish extends Model
         'name',
         'price',
         'active',
+        'ingredients'
     ];
 
     protected $casts = [

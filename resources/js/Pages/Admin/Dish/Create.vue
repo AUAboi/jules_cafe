@@ -12,6 +12,7 @@ const form = useForm({
   name: "",
   price: 0,
   image: null,
+  ingredients: "",
   active: false
 })
 
@@ -47,6 +48,10 @@ const handleSelectedMedia = (files) => {
     <div class="flex">
       <FormInputText label="Name" v-model="form.name" :error="form.errors.name" />
       <FormInputText step=".01" label="Price" v-model="form.price" :error="form.errors.price" type="number" />
+    </div>
+    <div class="flex">
+      <FormInputText style="width: 100%;" label="Ingredients (Use commas to separate)" v-model="form.ingredients"
+        :error="form.errors.ingredients" />
     </div>
     <div>
       <FormInputImage label="Dish Image" @selected="handleSelectedMedia" :error="form.errors.image" />

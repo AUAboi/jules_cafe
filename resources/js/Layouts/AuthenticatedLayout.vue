@@ -5,9 +5,11 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
 
 const showingNavigationDropdown = ref(false);
+
+const notifications = usePage().props.value.notifications;
 </script>
 
 <template>
@@ -30,10 +32,16 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('admin.orders')" :active="route().current('admin.orders')">
+                                <NavLink class="relative" :href="route('admin.orders')"
+                                    :active="route().current('admin.orders')">
+                                    <span v-if="notifications.length" class="bg-blue-400"
+                                        style="border-radius: 100%;color: white;width: 12px;height: 12px;position: absolute;top: 14px;right: -7px;">
+                                    </span>
+
                                     Orders
                                 </NavLink>
                                 <NavLink :href="route('admin.users')" :active="route().current('admin.users')">
+
                                     Users
                                 </NavLink>
                                 <NavLink :href="route('admin.category')" :active="route().current('admin.category')">
@@ -142,3 +150,7 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+
+<style scoped>
+.indicator {}
+</style>

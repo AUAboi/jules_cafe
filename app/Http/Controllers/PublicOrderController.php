@@ -28,9 +28,9 @@ class PublicOrderController extends Controller
         } catch (ModelNotFoundException $th) {
             return redirect()->back();
         }
-        dd($order);
-        OrderCreated::dispatch($order->table_no);
 
+
+        OrderCreated::dispatch($order);
         return redirect()->route('orders.placed', $order->order_no);
     }
 

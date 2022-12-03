@@ -1,11 +1,16 @@
 <script setup>
 import { Link, useForm } from "@inertiajs/inertia-vue3"
+import { computed } from "@vue/reactivity";
 const props = defineProps({
   cartDish: Object
 })
 
 const form = useForm({
   id: null
+})
+
+const ingredients = computed(() => {
+  return props.cartDish.ingredients.split(",")
 })
 
 const addToCart = (id) => {
@@ -41,6 +46,10 @@ const removeItem = (id) => {
       </div>
       <div class="flex flex-col justify-between ml-4 flex-grow">
         <span class="font-bold text-sm">{{ cartDish.name }}</span>
+        <div class="flex flex-col" v-if="cartDish.ingredients">
+          <span v-for="(ingredient, index) in ingredients" :key="index"
+            class="tracking-widest text-xs font-medium text-gray-500 mb-1 mr-3">{{ ingredient }}</span>
+        </div>
         <span @click="removeItem(cartDish.id)"
           class="font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer">Remove</span>
       </div>
